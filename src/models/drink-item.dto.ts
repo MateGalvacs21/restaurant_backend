@@ -1,9 +1,5 @@
 export type DrinkItemDTO = {
-    id: string;
-    name: string;
-    price: number;
-}
-
-
-
-
+	id: string;
+	name: string;
+	price: number;
+};

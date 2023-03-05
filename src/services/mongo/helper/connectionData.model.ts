@@ -1,4 +1,4 @@
 export type ConnectionData = {
-    dbName: string,
-    connStr: string
-}
+	dbName: string;
+	connStr: string;
+};

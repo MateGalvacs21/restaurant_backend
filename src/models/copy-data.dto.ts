@@ -1,8 +1,7 @@
-import {OrderItemDTO} from "./order-item.dto";
+import { OrderItemDTO } from './order-item.dto';
 
 export type CopyDataDTO = {
-    restaurantId: string;
-    items: OrderItemDTO[],
-    table: string;
-
- }
+	restaurantId: string;
+	items: OrderItemDTO[];
+	table: string;
+};
