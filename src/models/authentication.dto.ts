@@ -10,3 +10,7 @@ export type RegisterDTO = LoginDTO & {
 export type UserDTO = RegisterDTO & {
     id: string;
 }
+export type LoggedUserDTO = {
+    id: string;
+    date: Date;
+}

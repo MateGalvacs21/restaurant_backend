@@ -1,7 +1,8 @@
 import {DocumentType} from "@typegoose/typegoose";
 import {User} from "../model/authentication.model";
-import {RegisterDTO, UserDTO} from "../../models/authentication.dto";
+import {LoggedUserDTO, RegisterDTO, UserDTO} from "../../models/authentication.dto";
 import {Types} from "mongoose";
+import {LoggedUser} from "../model/loged-user.model";
 
 export class AuthenticationMapper {
 
@@ -25,5 +26,12 @@ export class AuthenticationMapper {
             isAdmin: dto.isAdmin,
             restaurantId: dto.restaurantId ? dto.restaurantId : ""
         } as DocumentType<User>
+    }
+
+    public static mapLoggedUserDTO(user: DocumentType<LoggedUser>): LoggedUserDTO {
+        return {
+            id: user._id ? user._id : "",
+            date: user.date ? user.date : new Date()
+        }
     }
 }

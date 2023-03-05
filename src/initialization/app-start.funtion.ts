@@ -6,6 +6,8 @@ import {RestaurantRoutes} from "../restaurant/routes/restaurant.route";
 import {OrderRoutes} from "../order/routes/order.route";
 import {PrintDataRoutes} from "../copydata/routes/copy-data.route";
 import {StatisticRoutes} from "../statistics/routes/statistic.route";
+import {AuthenticationRoutes} from "../authentication/routes/authentication.route";
+import {AppService} from "../services/app/app.service";
 
 const configuration = new ConfigurationService();
 export const start = () => {
@@ -16,6 +18,8 @@ export const start = () => {
     app.use("/api/order",OrderRoutes);
     app.use("/api/printer",PrintDataRoutes);
     app.use("/api/statistics",StatisticRoutes);
+    app.use("/api/authentication",AuthenticationRoutes);
+    AppService.startWatchExpired();
     app.listen(configuration.serverPort, () => Logger.success(`Server is run at ${configuration.serverPort} port!`))
 }
 
