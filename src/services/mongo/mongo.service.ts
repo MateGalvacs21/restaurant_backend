@@ -2,7 +2,7 @@ import { connect, Mongoose, set } from 'mongoose';
 
 import {ConfigurationService} from "../configuration/configuration.service";
 import {ConnectionData} from "./helper/connectionData.model";
-import {Logger} from "../../logger/logger.service";
+import {Logger} from "../logger/logger.service";
 
 export class MongoService {
     private readonly connectionString: string;

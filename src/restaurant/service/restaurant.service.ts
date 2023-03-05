@@ -9,7 +9,7 @@ import {
 import {RestaurantMapper} from "../mapper/restaurant/restaurant.mapper";
 import {DocumentType} from "@typegoose/typegoose";
 import {Restaurant} from "../model/restaurant.model";
-import {Logger} from "../../logger/logger.service";
+import {Logger} from "../../services/logger/logger.service";
 
 export class RestaurantService {
 

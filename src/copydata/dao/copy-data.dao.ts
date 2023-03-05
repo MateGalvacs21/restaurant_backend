@@ -2,7 +2,7 @@ import {OrderDTO} from "../../models/order.dto";
 import {DocumentType} from "@typegoose/typegoose";
 import {CopyData, CopyDataModel} from "../model/copy-data.model";
 import {CopyDataMapper} from "../mapper/copy-data.mapper";
-import {Logger} from "../../logger/logger.service";
+import {Logger} from "../../services/logger/logger.service";
 
 export class CopyDataDAO {
     public static async CopyData(order: OrderDTO): Promise<DocumentType<CopyData>> {

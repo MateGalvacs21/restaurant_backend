@@ -1,6 +1,6 @@
 import {DocumentType} from "@typegoose/typegoose";
 import {Order, OrderModel} from "../model/order.model";
-import {Logger} from "../../logger/logger.service";
+import {Logger} from "../../services/logger/logger.service";
 import {PatchOrder, PostOrder} from "../../models/order.dto";
 import {OrderMapper} from "../mapper/order/order.mapper";
 import {CopyDataService} from "../../copydata/service/copy-data.service";

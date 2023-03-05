@@ -1,6 +1,6 @@
 import {DocumentType} from "@typegoose/typegoose";
 import {Restaurant, RestaurantModel} from "../model/restaurant.model";
-import {Logger} from "../../logger/logger.service";
+import {Logger} from "../../services/logger/logger.service";
 import {
     DeleteRestaurant,
     EditDrinksRestaurant,

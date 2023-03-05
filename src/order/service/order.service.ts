@@ -3,7 +3,7 @@ import {Order} from "../model/order.model";
 import {OrderDAO} from "../dao/order.dao";
 import {OrderMapper} from "../mapper/order/order.mapper";
 import {DocumentType} from "@typegoose/typegoose";
-import {Logger} from "../../logger/logger.service";
+import {Logger} from "../../services/logger/logger.service";
 
 export class OrderService {
     public async getOrders(restaurantId: string): Promise<OrderDTO[] | []> {

@@ -1,7 +1,7 @@
 import express, {Application} from "express";
 import cors from "cors";
 import {ConfigurationService} from "../services/configuration/configuration.service";
-import {Logger} from "../logger/logger.service";
+import {Logger} from "../services/logger/logger.service";
 import {RestaurantRoutes} from "../restaurant/routes/restaurant.route";
 import {OrderRoutes} from "../order/routes/order.route";
 import {PrintDataRoutes} from "../copydata/routes/copy-data.route";

@@ -1,6 +1,6 @@
 import {Order} from "../../order/model/order.model";
 import {DocumentType} from "@typegoose/typegoose";
-import {Logger} from "../../logger/logger.service";
+import {Logger} from "../../services/logger/logger.service";
 import {StatisticDAO} from "../dao/statistic.dao";
 import {OrderDTO} from "../../models/order.dto";
 import {OrderMapper} from "../../order/mapper/order/order.mapper";

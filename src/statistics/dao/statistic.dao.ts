@@ -1,7 +1,7 @@
 import {DocumentType} from "@typegoose/typegoose";
 import {Statistic, StatisticModel} from "../model/statistic.model";
 import {OrderModel} from "../../order/model/order.model";
-import {Logger} from "../../logger/logger.service";
+import {Logger} from "../../services/logger/logger.service";
 
 export class StatisticDAO {
     public static async BackUp(id: string): Promise<void> {

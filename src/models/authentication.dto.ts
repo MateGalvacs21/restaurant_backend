@@ -7,3 +7,6 @@ export type RegisterDTO = LoginDTO & {
     isAdmin: boolean;
     name: string;
 }
+export type UserDTO = RegisterDTO & {
+    id: string;
+}

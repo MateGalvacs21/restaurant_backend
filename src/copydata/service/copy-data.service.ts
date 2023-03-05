@@ -3,7 +3,7 @@ import {CopyDataDTO} from "../../models/copy-data.dto";
 import {CopyDataDAO} from "../dao/copy-data.dao";
 import {CopyDataMapper} from "../mapper/copy-data.mapper";
 import {CopyData} from "../model/copy-data.model";
-import {Logger} from "../../logger/logger.service";
+import {Logger} from "../../services/logger/logger.service";
 import {DocumentType} from "@typegoose/typegoose";
 
 export class CopyDataService {
