@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
+    "build": "tsc",
     "start": "tsc && node dist/index.js",
     "format:code": "prettier --write \"src/**/*.ts\""
   },
