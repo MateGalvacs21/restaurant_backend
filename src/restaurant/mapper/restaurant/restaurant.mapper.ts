@@ -1,6 +1,6 @@
 import { DocumentType } from '@typegoose/typegoose';
 import { Restaurant } from '../../model/restaurant.model';
-import { PostRestaurant, RestaurantDTO } from '../../../models/restaurant.dto';
+import { PostRestaurant, RestaurantDTO } from '@root/shared/models/restaurant.dto';
 import { DrinkMapper } from '../drink/drink.mapper';
 import { MenuMapper } from '../menu/menu.mapper';
 import { Types } from 'mongoose';

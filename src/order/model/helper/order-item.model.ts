@@ -1,5 +1,5 @@
 import { getModelForClass, modelOptions, prop, Severity } from '@typegoose/typegoose';
-import { Afa } from '../../../models/coin.model';
+import { Afa } from '@root/shared/models/coin.model';
 
 @modelOptions({ options: { allowMixed: Severity.ALLOW, customName: 'orders' } })
 export class OrderItem {

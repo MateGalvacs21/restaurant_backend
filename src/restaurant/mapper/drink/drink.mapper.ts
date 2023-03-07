@@ -1,5 +1,5 @@
-import { DrinkItemDTO } from '../../../models/drink-item.dto';
-import { DrinkGroupDTO } from '../../../models/drink-group.dto';
+import { DrinkItemDTO } from '@root/shared/models/drink-item.dto';
+import { DrinkGroupDTO } from '@root/shared/models/drink-group.dto';
 import { DrinkGroup } from '../../model/helper/drink-group.model';
 import { DrinkItem } from '../../model/helper/drink-item.model';
 import { DocumentType } from '@typegoose/typegoose';

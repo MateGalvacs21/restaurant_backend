@@ -1,4 +1,4 @@
-import { MenuDTO } from '../../../models/menu.dto';
+import { MenuDTO } from '@root/shared/models/menu.dto';
 import { DocumentType } from '@typegoose/typegoose';
 import { Menu } from '../../model/helper/menu.model';
 

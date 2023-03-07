@@ -1,6 +1,6 @@
 import { RestaurantService } from '../service/restaurant.service';
 import { Request, Response } from 'express';
-import { DeleteRestaurant, EditDrinksRestaurant, EditMenuRestaurant, PostRestaurant } from '../../models/restaurant.dto';
+import { DeleteRestaurant, EditDrinksRestaurant, EditMenuRestaurant, PostRestaurant } from '../../shared/models/restaurant.dto';
 import { Types } from 'mongoose';
 import { StatusCodes } from 'http-status-codes';
 

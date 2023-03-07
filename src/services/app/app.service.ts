@@ -2,8 +2,9 @@ import { AuthenticationService } from '../../authentication/service/authenticati
 import { Logger } from '../logger/logger.service';
 
 export class AppService {
+	private static loggerService = new Logger();
 	public static startWatchExpired() {
-		Logger.success('Token expired visitor start.');
+		this.loggerService.success('Token expired visitor start.');
 		setInterval(AuthenticationService.expired, 18000000);
 	}
 }

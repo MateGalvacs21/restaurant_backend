@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { AuthenticationService } from '../service/authentication.service';
-import { LoginDTO, RegisterDTO } from '../../models/authentication.dto';
+import { LoginDTO, RegisterDTO } from '../../shared/models/authentication.dto';
 import { StatusCodes } from 'http-status-codes';
 
 export class AuthenticationController {

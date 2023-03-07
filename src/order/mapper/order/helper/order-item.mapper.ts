@@ -1,4 +1,4 @@
-import { OrderItemDTO } from '../../../../models/order-item.dto';
+import { OrderItemDTO } from '@root/shared/models/order-item.dto';
 import { DocumentType } from '@typegoose/typegoose';
 import { OrderItem } from '../../../model/helper/order-item.model';
 

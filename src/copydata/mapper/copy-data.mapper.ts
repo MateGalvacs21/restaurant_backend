@@ -1,6 +1,6 @@
-import { OrderDTO } from '../../models/order.dto';
-import { CopyDataDTO } from '../../models/copy-data.dto';
-import { OrderItemDTO } from '../../models/order-item.dto';
+import { OrderDTO } from '../../shared/models/order.dto';
+import { CopyDataDTO } from '../../shared/models/copy-data.dto';
+import { OrderItemDTO } from '../../shared/models/order-item.dto';
 import { DocumentType } from '@typegoose/typegoose';
 import { CopyData } from '../model/copy-data.model';
 import { OrderItemMapper } from '../../order/mapper/order/helper/order-item.mapper';

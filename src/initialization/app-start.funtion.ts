@@ -8,8 +8,7 @@ import { PrintDataRoutes } from '../copydata/routes/copy-data.route';
 import { StatisticRoutes } from '../statistics/routes/statistic.route';
 import { AuthenticationRoutes } from '../authentication/routes/authentication.route';
 import { AppService } from '../services/app/app.service';
-
-const configuration = new ConfigurationService();
+const loggerService = new Logger();
 export const start = () => {
 	const app: Application = express();
 	app.use(express.json());
@@ -20,9 +19,9 @@ export const start = () => {
 	app.use('/api/statistics', StatisticRoutes);
 	app.use('/api/authentication', AuthenticationRoutes);
 	AppService.startWatchExpired();
-	app.listen(configuration.serverPort, () => Logger.success(`Server is run at ${configuration.serverPort} port!`));
+	app.listen(ConfigurationService.ServerPort, () => loggerService.success(`Server is run at ${ConfigurationService.ServerPort} port!`));
 };
 
 export const errorHandler = () => {
-	Logger.error('SERVER cannot be start because have an problem..');
+	loggerService.error('SERVER cannot be start because have an problem..');
 };

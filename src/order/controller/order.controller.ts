@@ -1,7 +1,7 @@
 import { OrderService } from '../service/order.service';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { PatchOrder, PostOrder } from '../../models/order.dto';
+import { PatchOrder, PostOrder } from '../../shared/models/order.dto';
 
 export class OrderController {
 	private readonly orderService = new OrderService();

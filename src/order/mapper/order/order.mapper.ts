@@ -1,4 +1,4 @@
-import { OrderDTO, PostOrder } from '../../../models/order.dto';
+import { OrderDTO, PostOrder } from '@root/shared/models/order.dto';
 import { Types } from 'mongoose';
 import { DocumentType } from '@typegoose/typegoose';
 import { OrderItem } from '../../model/helper/order-item.model';
