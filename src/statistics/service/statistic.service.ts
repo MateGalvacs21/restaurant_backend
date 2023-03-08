@@ -15,6 +15,6 @@ export class StatisticService {
 	public static async getStatistics(restaurantId: string): Promise<OrderDTO[]> {
 		const statistics = await StatisticDAO.getStatistics(restaurantId);
 		this.loggerService.success(`${restaurantId} statistics fetched successfully`);
-		return OrderMapper.mapToDTOList(statistics as DocumentType<Order[]>);
+		return OrderMapper.mapToDTOList(statistics as DocumentType<Order>[]);
 	}
 }

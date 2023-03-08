@@ -2,13 +2,13 @@ import { getModelForClass, modelOptions, prop, Severity } from '@typegoose/typeg
 
 @modelOptions({ options: { allowMixed: Severity.ALLOW } })
 export class DrinkItem {
-	@prop()
-	public id?: string;
+	@prop({ required: true })
+	public id: string;
 
-	@prop()
-	public name?: string;
+	@prop({ required: true })
+	public name: string;
 
-	@prop()
-	public price?: number;
+	@prop({ required: true })
+	public price: number;
 }
 export const DrinkItemModel = getModelForClass(DrinkItem);

@@ -8,12 +8,12 @@ import { Logger } from '../../services/logger/logger.service';
 export class OrderService {
 	private loggerService = new Logger();
 	public async getOrders(restaurantId: string): Promise<OrderDTO[] | []> {
-		const orders: Order[] | [] = await OrderDAO.getOrdersByRestaurant(restaurantId);
+		const orders: DocumentType<Order>[] | [] = await OrderDAO.getOrdersByRestaurant(restaurantId);
 		this.loggerService.success(`Orders were fetched successfully (${restaurantId})`);
 		if (orders.length === 0) {
 			this.loggerService.warn(`This restaurant (${restaurantId}) has no order`);
 		}
-		return OrderMapper.mapToDTOList(orders as DocumentType<Order[]>);
+		return OrderMapper.mapToDTOList(orders);
 	}
 
 	public async patchOrder(order: PatchOrder): Promise<OrderDTO | null> {
@@ -27,13 +27,13 @@ export class OrderService {
 	}
 
 	public async getOrder(table: string): Promise<OrderDTO[] | []> {
-		const orders: Order[] | [] = await OrderDAO.getOrdersByTable(table);
+		const orders: DocumentType<Order>[] | [] = await OrderDAO.getOrdersByTable(table);
 		if (orders.length === 0) {
 			this.loggerService.error(`This ${table} table has no order`);
 			throw new Error(`This ${table} table has no order`);
 		}
 		this.loggerService.success(`This table ${table} fetched orders successfully`);
-		return OrderMapper.mapToDTOList(orders as DocumentType<Order[]>);
+		return OrderMapper.mapToDTOList(orders);
 	}
 
 	public async deleteOrder(id: string): Promise<void> {

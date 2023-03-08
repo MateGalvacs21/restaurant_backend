@@ -6,19 +6,19 @@ export class MenuMapper {
 	public static mapToDTOFromDAO(dao: DocumentType<Menu>): MenuDTO {
 		return {
 			id: dao.id,
-			items: dao.items ? dao.items : [],
-			name: dao.name ? dao.name : '',
-			nickname: dao.nickname ? dao.nickname : '',
-			price: dao.price ? dao.price : 0,
-			type: dao.type ? dao.type : '',
-			afa: dao.afa === 27 ? 27 : 5
+			items: dao.items,
+			name: dao.name,
+			nickname: dao.nickname,
+			price: dao.price,
+			type: dao.type,
+			afa: dao.afa
 		};
 	}
 
 	public static mapToDAOFromDTO(dto: MenuDTO): DocumentType<Menu> {
 		return {
 			id: dto.id,
-			items: dto.items ? dto.items : [],
+			items: dto.items,
 			name: dto.name,
 			nickname: dto.nickname,
 			price: dto.price,
@@ -27,23 +27,11 @@ export class MenuMapper {
 		} as DocumentType<Menu>;
 	}
 
-	public static mapToDTOList(daoList: DocumentType<Menu[]>): MenuDTO[] {
-		const dtoList: MenuDTO[] = [];
-		daoList.forEach((dao) => {
-			const dto = this.mapToDTOFromDAO(dao as DocumentType<Menu>);
-			if (!dto) return null;
-			dtoList.push(dto);
-		});
-		return dtoList;
+	public static mapToDTOList(daoList: DocumentType<Menu>[]): MenuDTO[] {
+		return daoList.map((dao) => this.mapToDTOFromDAO(dao));
 	}
 
-	public static mapToDAOList(dtoList: MenuDTO[]): DocumentType<Menu[]> {
-		const daoList: Menu[] = [];
-		dtoList.forEach((dto) => {
-			const dao = this.mapToDAOFromDTO(dto);
-			if (!dao) return null;
-			daoList.push(dao);
-		});
-		return daoList as DocumentType<Menu[]>;
+	public static mapToDAOList(dtoList: MenuDTO[]): DocumentType<Menu>[] {
+		return dtoList.map((dto) => this.mapToDAOFromDTO(dto));
 	}
 }

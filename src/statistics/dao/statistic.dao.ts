@@ -12,7 +12,7 @@ export class StatisticDAO {
 		this.loggerService.info(`[BACKUP] store order with ${id} id...`);
 	}
 
-	public static async getStatistics(restaurantId: string): Promise<Statistic[]> {
+	public static async getStatistics(restaurantId: string): Promise<DocumentType<Statistic>[]> {
 		this.loggerService.info(`[GET] ${restaurantId} statistics`);
 		return StatisticModel.find({ restaurantId: restaurantId });
 	}

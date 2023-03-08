@@ -7,11 +7,11 @@ import { LoggedUser } from '../model/loged-user.model';
 export class AuthenticationMapper {
 	public static mapToDTO(dao: DocumentType<User>): UserDTO {
 		return {
-			id: dao._id,
-			password: dao.password ? dao.password : '',
-			email: dao.email ? dao.email : '',
-			name: dao.name ? dao.name : '',
-			isAdmin: dao.isAdmin ? dao.isAdmin : false,
+			id: dao._id.toString(),
+			password: dao.password,
+			email: dao.email,
+			name: dao.name,
+			isAdmin: dao.isAdmin,
 			restaurantId: dao.restaurantId ? dao.restaurantId : ''
 		};
 	}
@@ -29,7 +29,7 @@ export class AuthenticationMapper {
 
 	public static mapLoggedUserDTO(user: DocumentType<LoggedUser>): LoggedUserDTO {
 		return {
-			id: user._id ? user._id : '',
+			id: user._id.toString(),
 			date: user.date ? user.date : new Date()
 		};
 	}

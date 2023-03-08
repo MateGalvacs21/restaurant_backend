@@ -1,7 +1,7 @@
 import { LoginDTO, RegisterDTO } from '../../shared/models/authentication.dto';
 import { DocumentType } from '@typegoose/typegoose';
 import { AuthenticationModel, User } from '../model/authentication.model';
-import { compare, genSaltSync, hash } from 'bcrypt';
+import { compareSync, genSaltSync, hash } from 'bcrypt';
 import { Logger } from '../../services/logger/logger.service';
 import { AuthenticationMapper } from '../mapper/authentication.mapper';
 import { LoggedUser, LoggedUserModel } from '../model/loged-user.model';
@@ -11,16 +11,13 @@ export class AuthenticationsDAO {
 	public static async login(authentication: LoginDTO): Promise<DocumentType<User> | null> {
 		const user = await AuthenticationModel.findOne({ email: authentication.email });
 		if (!user) return null;
-		if (!user.password) return null;
 		const logged = await LoggedUserModel.findOne({ _id: user._id });
 		if (logged) return null;
-		if (user && (await compare(authentication.password, user.password))) {
+		if (user && compareSync(authentication.password, user.password)) {
 			this.loggerService.info(`[LOGIN] ${user.email}...`);
 			await LoggedUserModel.insertMany({ _id: user._id, date: new Date() });
 			return user as DocumentType<User>;
-		} else {
-			return null;
-		}
+		} else return;
 	}
 
 	public static async signUp(registerData: RegisterDTO): Promise<DocumentType<User> | null> {
@@ -37,7 +34,7 @@ export class AuthenticationsDAO {
 		this.loggerService.info(`[LOGOUT] ${id}`);
 	}
 
-	public static async getAllLogged(): Promise<LoggedUser[]> {
+	public static async getAllLogged(): Promise<DocumentType<LoggedUser>[]> {
 		this.loggerService.info('[GET] all logged user...');
 		return LoggedUserModel.find();
 	}

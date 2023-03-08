@@ -5,46 +5,51 @@ import { DrinkItem } from '../../model/helper/drink-item.model';
 import { DocumentType } from '@typegoose/typegoose';
 
 export class DrinkMapper {
-	public static mapToDrinkGroupDTO(dao: DocumentType<DrinkGroup[]>): DrinkGroupDTO[] {
-		const dtoList: DrinkGroupDTO[] = [];
-		dao.forEach((daoData) => {
-			dtoList.push({
-				nameoftype: daoData.nameoftype ? daoData.nameoftype : '',
-				afa: daoData.afa === 27 ? 27 : 5,
-				items: this.mapDrinkItemDTO(daoData.items as DocumentType<DrinkItem[]>)
-			});
-		});
-		return dtoList;
+	public static mapItemToDAO(itemDTO: DrinkItemDTO): DocumentType<DrinkItem> {
+		return {
+			id: itemDTO.id,
+			name: itemDTO.name,
+			price: itemDTO.price
+		} as DocumentType<DrinkItem>;
 	}
 
-	public static mapDrinkItemDTO(dao: DocumentType<DrinkItem[]>): DrinkItemDTO[] | [] {
-		const dtoList: DrinkItemDTO[] = [];
-		dao.forEach((daoData) => {
-			if (!daoData.id || !daoData.price || !daoData.name) return [];
-			dtoList.push({ id: daoData.id, price: daoData.price, name: daoData.name });
-		});
-		return dtoList;
+	public static mapItemToDAOList(itemDTOList: DrinkItemDTO[]): DocumentType<DrinkItem>[] {
+		return itemDTOList.map((dto) => this.mapItemToDAO(dto));
 	}
 
-	public static mapToDrinkGroupDAO(dto: DrinkGroupDTO[]): DocumentType<DrinkGroup[]> {
-		const daoList: DrinkGroup[] = [];
-		dto.forEach((dtoData) => {
-			if (!dtoData.nameoftype || !dtoData.afa || !dtoData.items) return null;
-			daoList.push({
-				nameoftype: dtoData.nameoftype,
-				afa: dtoData.afa === 27 ? 27 : 5,
-				items: this.mapDrinkItemDAO(dtoData.items)
-			});
-		});
-		return daoList as DocumentType<DrinkGroup[]>;
+	public static mapGroupToDAO(groupDTO: DrinkGroupDTO): DocumentType<DrinkGroup> {
+		return {
+			nameoftype: groupDTO.nameoftype,
+			afa: groupDTO.afa,
+			items: this.mapItemToDAOList(groupDTO.items)
+		} as DocumentType<DrinkGroup>;
 	}
 
-	public static mapDrinkItemDAO(dto: DrinkItemDTO[]): DocumentType<DrinkItem[]> {
-		const daoList: DrinkItem[] = [];
-		dto.forEach((dtoData) => {
-			if (!dtoData.id || !dtoData.name || !dtoData.price) return null;
-			daoList.push({ id: dtoData.id, price: dtoData.price, name: dtoData.name });
-		});
-		return daoList as DocumentType<DrinkItem[]>;
+	public static mapGroupToDAOList(groupDTOList: DrinkGroupDTO[]): DocumentType<DrinkGroup>[] {
+		return groupDTOList.map((dto) => this.mapGroupToDAO(dto));
+	}
+
+	public static mapItemToDTO(itemDAO: DocumentType<DrinkItem>): DrinkItemDTO {
+		return {
+			id: itemDAO.id,
+			name: itemDAO.name,
+			price: itemDAO.price
+		};
+	}
+
+	public static mapItemToDTOList(itemDAOList: DocumentType<DrinkItem>[]): DrinkItemDTO[] {
+		return itemDAOList.map((dao) => this.mapItemToDAO(dao));
+	}
+
+	public static mapGroupToDTO(groupDAO: DocumentType<DrinkGroup>): DrinkGroupDTO {
+		return {
+			nameoftype: groupDAO.nameoftype,
+			afa: groupDAO.afa,
+			items: this.mapItemToDTOList(groupDAO.items)
+		};
+	}
+
+	public static mapGroupToDTOList(groupDAOList: DocumentType<DrinkGroup>[]): DrinkGroupDTO[] {
+		return groupDAOList.map((dao) => this.mapGroupToDTO(dao));
 	}
 }

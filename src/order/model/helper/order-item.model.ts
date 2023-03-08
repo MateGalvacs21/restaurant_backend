@@ -3,29 +3,29 @@ import { Afa } from '@root/shared/models/coin.model';
 
 @modelOptions({ options: { allowMixed: Severity.ALLOW, customName: 'orders' } })
 export class OrderItem {
-	@prop()
-	public name?: string;
+	@prop({ required: true })
+	public name: string;
 
-	@prop()
-	public price?: number;
+	@prop({ required: true })
+	public price: number;
 
-	@prop()
-	public afa?: Afa;
+	@prop({ required: true })
+	public afa: Afa;
 
-	@prop()
-	public items?: string[];
+	@prop({ required: true })
+	public items: string[];
 
-	@prop()
-	public itemsOriginalCount?: number;
+	@prop({ required: true })
+	public itemsOriginalCount: number;
 
-	@prop({ default: [] })
-	public extraItems?: string[];
+	@prop({ required: true, default: [] })
+	public extraItems: string[];
 
-	@prop({ default: [] })
-	public removedItems?: string[];
+	@prop({ required: true, default: [] })
+	public removedItems: string[];
 
-	@prop()
-	public type?: string;
+	@prop({ required: true })
+	public type: string;
 }
 
 export const OrderItemModel = getModelForClass(OrderItem);

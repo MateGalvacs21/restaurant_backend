@@ -3,11 +3,11 @@ import { Types } from 'mongoose';
 
 @modelOptions({ options: { allowMixed: Severity.ALLOW, customName: 'logged-in' } })
 export class LoggedUser {
-	@prop()
-	public _id?: Types.ObjectId;
+	@prop({ required: true })
+	public _id: Types.ObjectId;
 
-	@prop()
-	public date?: Date;
+	@prop({ required: true })
+	public date: Date;
 }
 
 export const LoggedUserModel = getModelForClass(LoggedUser);

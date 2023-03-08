@@ -8,24 +8,24 @@ import { CopyDataMapper } from '../../copydata/mapper/copy-data.mapper';
 
 export class OrderDAO {
 	private static loggerService = new Logger();
-	public static async getOrdersByRestaurant(restaurantId: string): Promise<Order[] | []> {
+	public static async getOrdersByRestaurant(restaurantId: string): Promise<DocumentType<Order>[] | []> {
 		this.loggerService.info(`[GET] orders by ${restaurantId}....`);
 		return OrderModel.find({ restaurantId: restaurantId });
 	}
 
-	public static async getOrdersByTable(table: string): Promise<Order[] | []> {
+	public static async getOrdersByTable(table: string): Promise<DocumentType<Order>[] | []> {
 		this.loggerService.info(`[GET] order to ${table} table....`);
 		return OrderModel.find({ table: table });
 	}
 
 	public static async postOrder(order: PostOrder): Promise<DocumentType<Order>> {
 		this.loggerService.info(`[POST] order to ${order.table} table....`);
-		const orderDAO = OrderMapper.mapToDTOFromPost(order);
-		const orderCopy = CopyDataMapper.mapToCopyData(orderDAO);
+		const orderDAO = OrderMapper.mapToDAO(order);
+		const orderCopy = CopyDataMapper.mapToCopyDAO(orderDAO);
 		if (orderCopy.items.length !== 0) {
 			await CopyDataService.copyData(orderDAO);
 		}
-		return OrderModel.create(OrderMapper.mapToDAO(orderDAO));
+		return OrderModel.create(orderDAO);
 	}
 
 	public static async deleteOrder(id: string): Promise<void> {
