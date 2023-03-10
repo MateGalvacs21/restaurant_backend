@@ -19,7 +19,7 @@ export class AuthenticationsDAO {
 			this.loggerService.info(`[LOGIN] ${user.email}...`);
 			await LoggedUserModel.insertMany({ _id: user._id, date: new Date() });
 			return user as DocumentType<User>;
-		} else return;
+		} else return null;
 	}
 
 	public static async signUp(registerData: RegisterDTO): Promise<DocumentType<User> | null> {

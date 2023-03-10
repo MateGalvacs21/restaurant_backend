@@ -69,7 +69,7 @@ describe('AuthenticationDao', () => {
 			const user = await AuthenticationsDAO.login({ email: userMock.email, password: userMock.password });
 
 			expect(compareSpy).toBeCalled();
-			expect(user).toEqual(undefined);
+			expect(user).toEqual(null);
 			expect(AuthenticationModel.findOne).toHaveBeenCalledWith({ email: userMock.email });
 			expect(LoggedUserModel.findOne).toHaveBeenCalled();
 		});

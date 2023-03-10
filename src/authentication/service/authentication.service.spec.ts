@@ -56,12 +56,15 @@ describe('Authentication Service', () => {
 			expect(user.id).toEqual(UserCollectionMock.user._id.toString());
 		});
 
-		it('should return with null, if this user not logged', async () => {
+		it('should throw error, if this user not logged', async () => {
 			const getDaoMock = jest.spyOn(AuthenticationsDAO, 'getLoggedUser').mockResolvedValue(null);
-			const user = await AuthenticationService.getLoggedUser(UserCollectionMock.user._id.toString());
-
-			expect(getDaoMock).toHaveBeenCalled();
-			expect(user).toEqual(null);
+			try {
+				await AuthenticationService.getLoggedUser(UserCollectionMock.user._id.toString());
+				fail();
+			}catch (error){
+				expect(getDaoMock).toHaveBeenCalled();
+				expect(error.message).toEqual('Not found.');
+			}
 		});
 	});
 

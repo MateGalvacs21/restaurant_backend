@@ -2,13 +2,14 @@ import { LoggedUserDTO, LoginDTO, RegisterDTO, UserDTO } from '../../shared/mode
 import { AuthenticationsDAO } from '../dao/authentications.dao';
 import { AuthenticationMapper } from '../mapper/authentication.mapper';
 import { Logger } from '../../services/logger/logger.service';
-
+import {DocumentType} from "@typegoose/typegoose";
+import {User} from "@root/authentication/model/authentication.model";
 
 export class AuthenticationService {
 	public static loggerService = new Logger();
 	public static async login(loginData: LoginDTO): Promise<UserDTO> {
-		const user = await AuthenticationsDAO.login(loginData);
-		if (!user) throw new Error('Password or email was wrong');
+		const user: DocumentType<User> | null = await AuthenticationsDAO.login(loginData);
+		if (user===null) throw new Error('Password or email was wrong');
 		this.loggerService.success('Login was successfully');
 		return AuthenticationMapper.mapToDTO(user);
 	}
@@ -36,7 +37,7 @@ export class AuthenticationService {
 	public static async getLoggedUser(id: string): Promise<LoggedUserDTO | null> {
 		const user = await AuthenticationsDAO.getLoggedUser(id);
 		this.loggerService.success(`Get logged user with ${id} successfully`);
-		if (!user) return null;
+		if (!user) throw new Error('Not found.');
 		return AuthenticationMapper.mapLoggedUserDTO(user);
 	}
 
