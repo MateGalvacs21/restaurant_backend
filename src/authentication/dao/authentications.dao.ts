@@ -1,7 +1,7 @@
 import { LoginDTO, RegisterDTO } from '../../shared/models/authentication.dto';
 import { DocumentType } from '@typegoose/typegoose';
 import { AuthenticationModel, User } from '../model/authentication.model';
-import { compareSync, genSaltSync, hash } from 'bcrypt';
+import {compareSync, genSaltSync, hashSync} from 'bcrypt';
 import { Logger } from '../../services/logger/logger.service';
 import { AuthenticationMapper } from '../mapper/authentication.mapper';
 import { LoggedUser, LoggedUserModel } from '../model/loged-user.model';
@@ -24,7 +24,7 @@ export class AuthenticationsDAO {
 		const user = await AuthenticationModel.findOne({ email: registerData.email });
 		if (user) return null;
 		const salt = genSaltSync(10);
-		const userHash: RegisterDTO = { ...registerData, password: await hash(registerData.password, salt) };
+		const userHash: RegisterDTO = { ...registerData, password: hashSync(registerData.password, salt) };
 		this.loggerService.info(`[REGISTER] new user ${registerData.email}...`);
 		return AuthenticationModel.create(AuthenticationMapper.mapToDAO(userHash));
 	}

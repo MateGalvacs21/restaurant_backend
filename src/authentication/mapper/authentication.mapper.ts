@@ -12,7 +12,7 @@ export class AuthenticationMapper {
 			email: dao.email,
 			name: dao.name,
 			isAdmin: dao.isAdmin,
-			restaurantId: dao.restaurantId ? dao.restaurantId : ''
+			restaurantId: dao.restaurantId
 		};
 	}
 
@@ -23,14 +23,14 @@ export class AuthenticationMapper {
 			email: dto.email,
 			name: dto.name,
 			isAdmin: dto.isAdmin,
-			restaurantId: dto.restaurantId ? dto.restaurantId : ''
+			restaurantId: dto.restaurantId
 		} as DocumentType<User>;
 	}
 
 	public static mapLoggedUserDTO(user: DocumentType<LoggedUser>): LoggedUserDTO {
 		return {
 			id: user._id.toString(),
-			date: user.date ? user.date : new Date()
+			date: user.date
 		};
 	}
 }

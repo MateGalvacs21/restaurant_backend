@@ -6,7 +6,7 @@ export class LoggedUser {
 	@prop({ required: true })
 	public _id: Types.ObjectId;
 
-	@prop({ required: true })
+	@prop({ required: true, default: new  Date()})
 	public date: Date;
 }
 
