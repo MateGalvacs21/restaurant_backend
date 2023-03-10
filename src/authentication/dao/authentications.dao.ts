@@ -1,13 +1,15 @@
 import { LoginDTO, RegisterDTO } from '../../shared/models/authentication.dto';
 import { DocumentType } from '@typegoose/typegoose';
 import { AuthenticationModel, User } from '../model/authentication.model';
-import {compareSync, genSaltSync, hashSync} from 'bcrypt';
+import { compareSync, genSaltSync, hashSync } from 'bcrypt';
 import { Logger } from '../../services/logger/logger.service';
 import { AuthenticationMapper } from '../mapper/authentication.mapper';
 import { LoggedUser, LoggedUserModel } from '../model/loged-user.model';
+import { Types } from 'mongoose';
 
 export class AuthenticationsDAO {
 	public static loggerService = new Logger();
+
 	public static async login(authentication: LoginDTO): Promise<DocumentType<User> | null> {
 		const user = await AuthenticationModel.findOne({ email: authentication.email });
 		if (!user) return null;
@@ -47,5 +49,10 @@ export class AuthenticationsDAO {
 	public static async addRestaurant(id: string, restaurantId: string): Promise<DocumentType<User> | null> {
 		this.loggerService.info(`[PATCH] add restaurant to user id: ${id} ...`);
 		return AuthenticationModel.findOneAndUpdate({ _id: id }, { $set: { restaurantId: restaurantId } }, { new: true });
+	}
+
+	public static async expired(ids: Types.ObjectId[]): Promise<void> {
+		await LoggedUserModel.deleteMany({ _id: { $in: ids } });
+		this.loggerService.info('[EXPIRED] CLEAR....');
 	}
 }

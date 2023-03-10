@@ -2,8 +2,7 @@ import { LoggedUserDTO, LoginDTO, RegisterDTO, UserDTO } from '../../shared/mode
 import { AuthenticationsDAO } from '../dao/authentications.dao';
 import { AuthenticationMapper } from '../mapper/authentication.mapper';
 import { Logger } from '../../services/logger/logger.service';
-import { DocumentType } from '@typegoose/typegoose';
-import { LoggedUser } from '../model/loged-user.model';
+
 
 export class AuthenticationService {
 	public static loggerService = new Logger();
@@ -26,18 +25,12 @@ export class AuthenticationService {
 		this.loggerService.success(`Logout was successfully id: ${id}`);
 	}
 
-	public static async expired(): Promise<void> {
+	public static async expired(date = new Date()): Promise<void> {
 		this.loggerService.warn('Logout expired user');
 		const loggedUsers = await AuthenticationsDAO.getAllLogged();
-		const date = new Date();
-		if (loggedUsers.length === 0) return;
-		loggedUsers.forEach((user) => {
-			if (!user._id || !user.date) return;
-			if (date.getFullYear() !== user.date.getFullYear() && date.getMonth() + 1 !== user.date.getMonth() + 1 && date.getDate() !== user.date.getDate()) {
-				const userDTO = AuthenticationMapper.mapLoggedUserDTO(user as DocumentType<LoggedUser>);
-				this.logOut(userDTO.id);
-			}
-		});
+		const filteredList = AuthenticationMapper.mapExpiredIds(loggedUsers, date);
+		if (filteredList.length === 0) return null;
+		await AuthenticationsDAO.expired(filteredList);
 	}
 
 	public static async getLoggedUser(id: string): Promise<LoggedUserDTO | null> {
