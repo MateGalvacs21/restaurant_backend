@@ -1,7 +1,7 @@
 import { DocumentType } from '@typegoose/typegoose';
 import { Restaurant, RestaurantModel } from '../model/restaurant.model';
 import { Logger } from '../../services/logger/logger.service';
-import { DeleteRestaurant, EditDrinksRestaurant, EditMenuRestaurant, PostRestaurant, RestaurantDTO } from '../../shared/models/restaurant.dto';
+import { DeleteRestaurant, EditDrinksRestaurant, EditMenuRestaurant, PostRestaurant } from '../../shared/models/restaurant.dto';
 import { RestaurantMapper } from '../mapper/restaurant/restaurant.mapper';
 
 export class RestaurantDAO {
@@ -23,8 +23,7 @@ export class RestaurantDAO {
 
 	public static async postRestaurant(newRestaurant: PostRestaurant): Promise<DocumentType<Restaurant> | null> {
 		this.loggerService.info(`[POST] add new restaurant...`);
-		const restaurantDTO: RestaurantDTO = RestaurantMapper.mapToDTOFromPost(newRestaurant);
-		const restaurant = await RestaurantModel.create(RestaurantMapper.mapToDAO(restaurantDTO));
+		const restaurant = await RestaurantModel.create(RestaurantMapper.mapToDAO(newRestaurant));
 		await restaurant.save();
 		return restaurant;
 	}

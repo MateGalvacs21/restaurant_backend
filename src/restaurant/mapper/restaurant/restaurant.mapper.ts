@@ -5,23 +5,18 @@ import { DrinkMapper } from '../drink/drink.mapper';
 import { MenuMapper } from '../menu/menu.mapper';
 import { Types } from 'mongoose';
 export class RestaurantMapper {
-	public static mapToDTO(dao: DocumentType<Restaurant>): RestaurantDTO | null {
-		if (!dao.drinks || !dao.menu) return null;
+	public static mapToDTO(dao: DocumentType<Restaurant>): RestaurantDTO {
 		return {
-			id: dao._id,
-			drinks: DrinkMapper.mapToDrinkGroupDTO(dao.drinks),
+			id: dao._id.toString(),
+			drinks: DrinkMapper.mapGroupToDTOList(dao.drinks),
 			menu: MenuMapper.mapToDTOList(dao.menu)
 		};
 	}
 
-	public static mapToDTOFromPost(postDTO: PostRestaurant): RestaurantDTO {
-		return { ...postDTO, id: new Types.ObjectId().toString() };
-	}
-
-	public static mapToDAO(dto: RestaurantDTO): DocumentType<Restaurant> {
+	public static mapToDAO(dto: PostRestaurant): DocumentType<Restaurant> {
 		return {
-			_id: dto.id,
-			drinks: DrinkMapper.mapToDrinkGroupDAO(dto.drinks),
+			_id: new Types.ObjectId(),
+			drinks: DrinkMapper.mapGroupToDAOList(dto.drinks),
 			menu: MenuMapper.mapToDAOList(dto.menu)
 		} as DocumentType<Restaurant>;
 	}

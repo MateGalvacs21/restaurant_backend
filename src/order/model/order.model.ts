@@ -4,29 +4,29 @@ import { OrderItem } from './helper/order-item.model';
 
 @modelOptions({ options: { allowMixed: Severity.ALLOW, customName: 'orders' } })
 export class Order {
-	@prop()
-	public _id?: Types.ObjectId;
+	@prop({ required: true })
+	public _id: Types.ObjectId;
 
-	@prop()
-	public amount?: number;
+	@prop({ required: true })
+	public amount: number;
 
-	@prop()
-	public afa27?: number;
+	@prop({ required: true })
+	public afa27: number;
 
-	@prop()
-	public afa5?: number;
+	@prop({ required: true })
+	public afa5: number;
 
-	@prop()
-	public items?: DocumentType<OrderItem[]>;
+	@prop({ required: true })
+	public items: DocumentType<OrderItem>[];
 
-	@prop()
-	public table?: string;
+	@prop({ required: true })
+	public table: string;
 
-	@prop()
-	public restaurantId?: string;
+	@prop({ required: true })
+	public restaurantId: string;
 
-	@prop()
-	public date?: string;
+	@prop({ required: true })
+	public date: string;
 }
 
 export const OrderModel = getModelForClass(Order);

@@ -1,15 +1,17 @@
 import { DocumentType, getModelForClass, modelOptions, prop, Severity } from '@typegoose/typegoose';
 import { DrinkItem } from './drink-item.model';
+import { Afa } from '@root/shared/models/coin.model';
 
 @modelOptions({ options: { allowMixed: Severity.ALLOW } })
 export class DrinkGroup {
-	@prop()
-	public nameoftype?: string;
+	@prop({ required: true })
+	public nameoftype: string;
 
-	@prop()
-	public items?: DocumentType<DrinkItem[]>;
+	@prop({ required: true })
+	public items: DocumentType<DrinkItem>[];
 
-	@prop()
-	afa?: number;
+	@prop({ required: true })
+	afa: Afa;
 }
+
 export const DrinkGroupModel = getModelForClass(DrinkGroup);
