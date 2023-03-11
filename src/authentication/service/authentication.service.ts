@@ -27,11 +27,16 @@ export class AuthenticationService {
 	}
 
 	public static async expired(date = new Date()): Promise<void> {
-		this.loggerService.warn('Logout expired user');
+		this.loggerService.warn('Logout expired users...');
 		const loggedUsers = await AuthenticationsDAO.getAllLogged();
+		if(loggedUsers.length===0){
+			this.loggerService.info('No have logged users.');
+			return null;
+		}
 		const filteredList = AuthenticationMapper.mapExpiredIds(loggedUsers, date);
 		if (filteredList.length === 0) return null;
 		await AuthenticationsDAO.expired(filteredList);
+		this.loggerService.warn('Clear success.')
 	}
 
 	public static async getLoggedUser(id: string): Promise<LoggedUserDTO | null> {
