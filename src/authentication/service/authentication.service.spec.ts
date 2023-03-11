@@ -129,12 +129,23 @@ describe('Authentication Service', () => {
 			jest.resetAllMocks();
 		});
 
-		it('should not run if no have expired token', async () => {
+		it('should not run if no have token', async () => {
 			const getAllMock = jest.spyOn(AuthenticationsDAO, 'getAllLogged').mockResolvedValue([]);
 			const expiredMock = jest.spyOn(AuthenticationsDAO, 'expired').mockImplementation();
 			await AuthenticationService.expired(new Date('2023-03-10'));
 
 			expect(getAllMock).toHaveBeenCalled();
+			expect(expiredMock).not.toHaveBeenCalled();
+		});
+
+		it('should not run if no have expired token', async () => {
+			const getAllMock = jest.spyOn(AuthenticationsDAO, 'getAllLogged').mockResolvedValue([UserCollectionMock.logged[0]]);
+			const mapperSpy = jest.spyOn(AuthenticationMapper, 'mapExpiredIds').mockReturnValue([]);
+			const expiredMock = jest.spyOn(AuthenticationsDAO, 'expired').mockImplementation();
+			await AuthenticationService.expired(new Date('2023-03-10'));
+
+			expect(getAllMock).toHaveBeenCalled();
+			expect(mapperSpy).toHaveBeenCalled();
 			expect(expiredMock).not.toHaveBeenCalled();
 		});
 
