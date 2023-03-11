@@ -1,10 +1,12 @@
 import {DocumentType} from "@typegoose/typegoose";
 import {Order} from "@root/order/model/order.model";
 import {OrderItemMapper} from "@root/order/mapper/order/helper/order-item.mapper";
+import {Types} from "mongoose";
 
 export const OrderCollectionMock = {
     get order(): DocumentType<Order> {
         return {
+            _id: new Types.ObjectId("640cf2c4fa1c6aae619f8494"),
             table: "B1",
             date: new Date().toString(),
             restaurantId: "63cc776b9c1f72057706a601",

@@ -12,8 +12,9 @@ export class StatisticService {
 		this.loggerService.success(`Store was successfully`);
 	}
 
-	public static async getStatistics(restaurantId: string): Promise<OrderDTO[]> {
+	public static async getStatistics(restaurantId: string): Promise<OrderDTO[] | []> {
 		const statistics = await StatisticDAO.getStatistics(restaurantId);
+		if(statistics.length===0) return [];
 		this.loggerService.success(`${restaurantId} statistics fetched successfully`);
 		return OrderMapper.mapToDTOList(statistics as DocumentType<Order>[]);
 	}
