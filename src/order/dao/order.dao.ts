@@ -8,12 +8,12 @@ import { CopyDataMapper } from '../../copydata/mapper/copy-data.mapper';
 
 export class OrderDAO {
 	private static loggerService = new Logger();
-	public static async getOrdersByRestaurant(restaurantId: string): Promise<DocumentType<Order>[] | []> {
+	public static async getOrdersByRestaurant(restaurantId: string): Promise<DocumentType<Order>[]> {
 		this.loggerService.info(`[GET] orders by ${restaurantId}....`);
 		return OrderModel.find({ restaurantId: restaurantId });
 	}
 
-	public static async getOrdersByTable(table: string): Promise<DocumentType<Order>[] | []> {
+	public static async getOrdersByTable(table: string): Promise<DocumentType<Order>[]> {
 		this.loggerService.info(`[GET] order to ${table} table....`);
 		return OrderModel.find({ table: table });
 	}
@@ -33,7 +33,7 @@ export class OrderDAO {
 		this.loggerService.info(`[DELETE] order with ${id} id....`);
 	}
 
-	public static async patchOrder(order: PatchOrder): Promise<DocumentType<Order> | null> {
+	public static async patchOrder(order: PatchOrder): Promise<DocumentType<Order>> {
 		this.loggerService.info(`[PATCH] order with ${order.id} id....`);
 		return OrderModel.findOneAndUpdate(
 			{ _id: order.id },

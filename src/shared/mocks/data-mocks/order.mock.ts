@@ -8,11 +8,11 @@ export const OrderCollectionMock = {
         return {
             _id: new Types.ObjectId("640cf2c4fa1c6aae619f8494"),
             table: "B1",
-            date: new Date().toString(),
+            date: new Date("2023-03-10").toString(),
             restaurantId: "63cc776b9c1f72057706a601",
-            amount: 5000,
-            afa27: 2000,
-            afa5: 3000,
+            amount: 15000,
+            afa27: 0,
+            afa5: 15000,
             items: OrderItemMapper.mapItemToDAOList([{
                     name: "TestEtel",
                     price: 3000,
@@ -21,7 +21,8 @@ export const OrderCollectionMock = {
                     itemsOriginalCount: 1,
                     extraItems: [],
                     removedItems: [],
-                    type: "Leves"
+                    type: "Leves",
+                    nickname: "asd"
             },
                 {
                     name: "TestEtel",
@@ -31,7 +32,8 @@ export const OrderCollectionMock = {
                     itemsOriginalCount: 1,
                     extraItems: [],
                     removedItems: [],
-                    type: "Leves"
+                    type: "Leves",
+                    nickname: "asd"
                 },
                 {
                     name: "TestEtel",
@@ -41,7 +43,8 @@ export const OrderCollectionMock = {
                     itemsOriginalCount: 1,
                     extraItems: [],
                     removedItems: [],
-                    type: "desszert"
+                    type: "desszert",
+                    nickname: "asd"
                 },
                 {
                     name: "TestEtel",
@@ -51,7 +54,8 @@ export const OrderCollectionMock = {
                     itemsOriginalCount: 1,
                     extraItems: [],
                     removedItems: [],
-                    type: "martas"
+                    type: "martas",
+                    nickname: "asd"
                 },
                 {
                     name: "TestEtel",
@@ -61,7 +65,8 @@ export const OrderCollectionMock = {
                     itemsOriginalCount: 1,
                     extraItems: [],
                     removedItems: [],
-                    type: "salata"
+                    type: "salata",
+                    nickname: "asd"
                 },
                 {
                     name: "TestEtel",
@@ -71,7 +76,8 @@ export const OrderCollectionMock = {
                     itemsOriginalCount: 1,
                     extraItems: [],
                     removedItems: [],
-                    type: "foetel"
+                    type: "foetel",
+                    nickname: "asd"
                 }
             ])
         } as DocumentType<Order>
