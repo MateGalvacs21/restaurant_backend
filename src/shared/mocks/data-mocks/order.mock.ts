@@ -2,6 +2,7 @@ import {DocumentType} from "@typegoose/typegoose";
 import {Order} from "@root/order/model/order.model";
 import {OrderItemMapper} from "@root/order/mapper/order/helper/order-item.mapper";
 import {Types} from "mongoose";
+import {OrderItemDTO} from "@root/shared/models/order-item.dto";
 
 export const OrderCollectionMock = {
     get order(): DocumentType<Order> {
@@ -81,5 +82,18 @@ export const OrderCollectionMock = {
                 }
             ])
         } as DocumentType<Order>
+    },
+    get orderItemDTO(): OrderItemDTO{
+        return {
+            name:"test",
+            nickname:"test nickname",
+            price:5000,
+            afa:5,
+            items:["ex"],
+            itemsOriginalCount:1,
+            extraItems:[],
+            type:"foetel",
+            removedItems:[]
+        }
     }
 }

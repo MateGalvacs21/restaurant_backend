@@ -12,7 +12,8 @@ export class OrderItemMapper {
 			extraItems: orderItemDTO.extraItems,
 			removedItems: orderItemDTO.removedItems,
 			afa: orderItemDTO.afa,
-			type: orderItemDTO.type
+			type: orderItemDTO.type,
+			itemsOriginalCount: orderItemDTO.itemsOriginalCount
 		} as DocumentType<OrderItem>;
 	}
 
