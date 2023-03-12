@@ -4,9 +4,9 @@ import { StatusCodes } from 'http-status-codes';
 import { PatchOrder, PostOrder } from '../../shared/models/order.dto';
 
 export class OrderController {
-	private readonly orderService = new OrderService();
+
 	public getOrdersByTable = (req: Request, res: Response) => {
-		this.orderService
+		OrderService
 			.getOrdersByTable(req.params.table)
 			.then((orders) => {
 				res.status(StatusCodes.OK).json(orders);
@@ -17,7 +17,7 @@ export class OrderController {
 	};
 
 	public getOrdersByRestaurant = (req: Request, res: Response) => {
-		this.orderService
+		OrderService
 			.getOrdersByRestaurant(req.params.restaurantId)
 			.then((orders) => {
 				res.status(StatusCodes.OK).json(orders);
@@ -28,7 +28,7 @@ export class OrderController {
 	};
 
 	public deleteOrder = (req: Request, res: Response) => {
-		this.orderService
+		OrderService
 			.deleteOrder(req.params.id)
 			.then(() => {
 				res.status(StatusCodes.OK).json({ deleteId: req.params.id });
@@ -45,7 +45,7 @@ export class OrderController {
 			amount: req.body.amount
 		};
 
-		this.orderService
+		OrderService
 			.patchOrder(patchOrder)
 			.then((order) => {
 				res.status(StatusCodes.ACCEPTED).json(order);
@@ -58,7 +58,7 @@ export class OrderController {
 	public postOrder = (req: Request, res: Response) => {
 		const postedOrder: PostOrder = req.body;
 
-		this.orderService
+		OrderService
 			.postOrder(postedOrder)
 			.then((order) => {
 				res.status(StatusCodes.CREATED).json(order);

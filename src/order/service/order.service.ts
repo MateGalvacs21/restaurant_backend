@@ -6,8 +6,8 @@ import { DocumentType } from '@typegoose/typegoose';
 import { Logger } from '../../services/logger/logger.service';
 
 export class OrderService {
-	private loggerService = new Logger();
-	public async getOrdersByRestaurant(restaurantId: string): Promise<OrderDTO[] | []> {
+	private static loggerService = new Logger();
+	public static async getOrdersByRestaurant(restaurantId: string): Promise<OrderDTO[] | []> {
 		const orders: DocumentType<Order>[] | [] = await OrderDAO.getOrdersByRestaurant(restaurantId);
 		this.loggerService.success(`Orders were fetched successfully (${restaurantId})`);
 		if (orders.length === 0) {
@@ -17,7 +17,7 @@ export class OrderService {
 		return OrderMapper.mapToDTOList(orders);
 	}
 
-	public async patchOrder(order: PatchOrder): Promise<OrderDTO> {
+	public static async patchOrder(order: PatchOrder): Promise<OrderDTO> {
 		const orderDAO: DocumentType<Order> | null = await OrderDAO.patchOrder(order);
 		if (!orderDAO) {
 			this.loggerService.error(`Order modify was no successfully`);
@@ -27,7 +27,7 @@ export class OrderService {
 		return OrderMapper.mapToDTO(orderDAO);
 	}
 
-	public async getOrdersByTable(table: string): Promise<OrderDTO[] | []> {
+	public static async getOrdersByTable(table: string): Promise<OrderDTO[] | []> {
 		const orders: DocumentType<Order>[] | [] = await OrderDAO.getOrdersByTable(table);
 		if (orders.length === 0) {
 			this.loggerService.error(`This ${table} table has no order`);
@@ -37,12 +37,12 @@ export class OrderService {
 		return OrderMapper.mapToDTOList(orders);
 	}
 
-	public async deleteOrder(id: string): Promise<void> {
+	public static async deleteOrder(id: string): Promise<void> {
 		await OrderDAO.deleteOrder(id);
 		this.loggerService.success(`This order ${id} delete successfully`);
 	}
 
-	public async postOrder(postOrder: PostOrder): Promise<OrderDTO> {
+	public static async postOrder(postOrder: PostOrder): Promise<OrderDTO> {
 		const order: DocumentType<Order> | null = await OrderDAO.postOrder(postOrder);
 		if (!order) {
 			this.loggerService.error(`New order added no successfully`);

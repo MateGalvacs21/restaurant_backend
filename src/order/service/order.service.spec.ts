@@ -5,13 +5,12 @@ import {OrderMapper} from "@root/order/mapper/order/order.mapper";
 
 
 describe('Order Service', ()=>{
-    const orderService= new OrderService();
     describe('getOrdersByRestaurant',()=>{
 
         it('should return with orders if restaurant has order',async ()=>{
 
             const getByRestaurantSpy= jest.spyOn(OrderDAO,'getOrdersByRestaurant').mockResolvedValue([OrderCollectionMock.order]);
-            const orders = await orderService.getOrdersByRestaurant(OrderCollectionMock.order.restaurantId);
+            const orders = await OrderService.getOrdersByRestaurant(OrderCollectionMock.order.restaurantId);
 
             expect(getByRestaurantSpy).toHaveBeenCalledWith(OrderCollectionMock.order.restaurantId);
             expect(orders).toEqual(OrderMapper.mapToDTOList([OrderCollectionMock.order]));
@@ -20,7 +19,7 @@ describe('Order Service', ()=>{
         it('should return with empty list if restaurant has no order',async ()=>{
 
             const getByRestaurantSpy= jest.spyOn(OrderDAO,'getOrdersByRestaurant').mockResolvedValue([]);
-            const orders = await orderService.getOrdersByRestaurant(OrderCollectionMock.order.restaurantId);
+            const orders = await OrderService.getOrdersByRestaurant(OrderCollectionMock.order.restaurantId);
 
             expect(getByRestaurantSpy).toHaveBeenCalledWith(OrderCollectionMock.order.restaurantId);
             expect(orders).toEqual([]);
@@ -31,7 +30,7 @@ describe('Order Service', ()=>{
             const getByRestaurantSpy= jest.spyOn(OrderDAO,'getOrdersByRestaurant').mockRejectedValue(new Error('some problem'));
             try {
 
-                await orderService.getOrdersByRestaurant(OrderCollectionMock.order.restaurantId);
+                await OrderService.getOrdersByRestaurant(OrderCollectionMock.order.restaurantId);
 
                 expect(getByRestaurantSpy).toHaveBeenCalledWith(OrderCollectionMock.order.restaurantId);
 
@@ -46,7 +45,7 @@ describe('Order Service', ()=>{
         it('should return with orders if restaurant table has order',async ()=>{
 
             const getByTableSpy= jest.spyOn(OrderDAO,'getOrdersByTable').mockResolvedValue([OrderCollectionMock.order]);
-            const orders = await orderService.getOrdersByTable(OrderCollectionMock.order.table);
+            const orders = await OrderService.getOrdersByTable(OrderCollectionMock.order.table);
 
             expect(getByTableSpy).toHaveBeenCalledWith(OrderCollectionMock.order.table);
             expect(orders).toEqual(OrderMapper.mapToDTOList([OrderCollectionMock.order]));
@@ -55,7 +54,7 @@ describe('Order Service', ()=>{
         it('should return with empty list if restaurant table has no order',async ()=>{
 
             const getByTableSpy= jest.spyOn(OrderDAO,'getOrdersByTable').mockResolvedValue([]);
-            const orders = await orderService.getOrdersByTable(OrderCollectionMock.order.table);
+            const orders = await OrderService.getOrdersByTable(OrderCollectionMock.order.table);
 
             expect(getByTableSpy).toHaveBeenCalledWith(OrderCollectionMock.order.table);
             expect(orders).toEqual([]);
@@ -66,7 +65,7 @@ describe('Order Service', ()=>{
             const getByTableSpy= jest.spyOn(OrderDAO,'getOrdersByTable').mockRejectedValue(new Error('some problem'));
             try {
 
-                await orderService.getOrdersByTable(OrderCollectionMock.order.table);
+                await OrderService.getOrdersByTable(OrderCollectionMock.order.table);
 
                 expect(getByTableSpy).toHaveBeenCalledWith(OrderCollectionMock.order.table);
 
@@ -81,7 +80,7 @@ describe('Order Service', ()=>{
         it('should update an order if call patch order',async ()=>{
 
             const patchOrderSpy= jest.spyOn(OrderDAO,'patchOrder').mockResolvedValue(OrderCollectionMock.patchedOrderDAO);
-            const order = await orderService.patchOrder(OrderCollectionMock.patchOrder);
+            const order = await OrderService.patchOrder(OrderCollectionMock.patchOrder);
             expect(patchOrderSpy).toHaveBeenCalledWith(OrderCollectionMock.patchOrder);
             expect(order).toEqual(OrderMapper.mapToDTO(OrderCollectionMock.patchedOrderDAO));
         });
@@ -91,7 +90,7 @@ describe('Order Service', ()=>{
             const patchOrderSpy= jest.spyOn(OrderDAO,'patchOrder').mockResolvedValue(null);
             try {
 
-                await orderService.patchOrder(OrderCollectionMock.patchOrder);
+                await OrderService.patchOrder(OrderCollectionMock.patchOrder);
 
                 expect(patchOrderSpy).toHaveBeenCalledWith(OrderCollectionMock.patchOrder);
 
@@ -106,7 +105,7 @@ describe('Order Service', ()=>{
         it('should call delete query in dao',async ()=>{
 
             const deleteOrderSpy= jest.spyOn(OrderDAO,'deleteOrder').mockResolvedValue(null);
-            await orderService.deleteOrder(OrderCollectionMock.order._id.toString());
+            await OrderService.deleteOrder(OrderCollectionMock.order._id.toString());
 
             expect(deleteOrderSpy).toHaveBeenCalledWith(OrderCollectionMock.order._id.toString());
         });
@@ -117,7 +116,7 @@ describe('Order Service', ()=>{
             const deleteOrderSpy= jest.spyOn(OrderDAO,'deleteOrder').mockRejectedValue(new Error('some problem'));
             try {
 
-                await orderService.deleteOrder(OrderCollectionMock.order._id.toString());
+                await OrderService.deleteOrder(OrderCollectionMock.order._id.toString());
 
                 expect(deleteOrderSpy).toHaveBeenCalledWith(OrderCollectionMock.order._id.toString());
 
@@ -132,7 +131,7 @@ describe('Order Service', ()=>{
         it('should return with new order',async ()=>{
 
             const postOrderSpy= jest.spyOn(OrderDAO,'postOrder').mockResolvedValue(OrderCollectionMock.order);
-            const order= await orderService.postOrder(OrderCollectionMock.postOrder);
+            const order= await OrderService.postOrder(OrderCollectionMock.postOrder);
             const expectedOrder = OrderMapper.mapToDTO(OrderCollectionMock.order);
 
             expect(postOrderSpy).toHaveBeenCalledWith(OrderCollectionMock.postOrder);
@@ -149,7 +148,7 @@ describe('Order Service', ()=>{
             const postOrderSpy= jest.spyOn(OrderDAO,'postOrder').mockResolvedValue(null);
             try {
 
-                await orderService.postOrder(OrderCollectionMock.postOrder);
+                await OrderService.postOrder(OrderCollectionMock.postOrder);
 
                 expect(postOrderSpy).toHaveBeenCalledWith(OrderCollectionMock.postOrder);
 
