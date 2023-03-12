@@ -7,23 +7,23 @@ export class OrderController {
 	private readonly orderService = new OrderService();
 	public getOrdersByTable = (req: Request, res: Response) => {
 		this.orderService
-			.getOrder(req.params.table)
+			.getOrdersByTable(req.params.table)
 			.then((orders) => {
 				res.status(StatusCodes.OK).json(orders);
 			})
 			.catch((error) => {
-				res.status(StatusCodes.NOT_FOUND).json(error);
+				res.status(StatusCodes.NOT_FOUND).json({error:error.message});
 			});
 	};
 
 	public getOrdersByRestaurant = (req: Request, res: Response) => {
 		this.orderService
-			.getOrders(req.params.restaurantId)
+			.getOrdersByRestaurant(req.params.restaurantId)
 			.then((orders) => {
 				res.status(StatusCodes.OK).json(orders);
 			})
 			.catch((error) => {
-				res.status(StatusCodes.NOT_FOUND).json(error);
+				res.status(StatusCodes.NOT_FOUND).json({error:error.message});
 			});
 	};
 
@@ -34,7 +34,7 @@ export class OrderController {
 				res.status(StatusCodes.OK).json({ deleteId: req.params.id });
 			})
 			.catch((error) => {
-				res.status(StatusCodes.NOT_FOUND).json(error);
+				res.status(StatusCodes.NOT_FOUND).json({error:error.message});
 			});
 	};
 
@@ -51,7 +51,7 @@ export class OrderController {
 				res.status(StatusCodes.ACCEPTED).json(order);
 			})
 			.catch((error) => {
-				res.status(StatusCodes.NOT_FOUND).json(error);
+				res.status(StatusCodes.NOT_FOUND).json({error:error.message});
 			});
 	};
 
@@ -64,7 +64,7 @@ export class OrderController {
 				res.status(StatusCodes.CREATED).json(order);
 			})
 			.catch((error) => {
-				res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+				res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error:error.message});
 			});
 	};
 }

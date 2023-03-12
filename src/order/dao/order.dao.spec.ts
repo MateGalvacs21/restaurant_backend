@@ -76,7 +76,7 @@ describe('OrderDao', () => {
                 name: "tester",
                 nickname: "nickTest"
             };
-            const items = [...OrderCollectionMock.order.items, orderItem]
+            const items = [...OrderCollectionMock.order.items, orderItem];
             OrderModel.findOneAndUpdate = jest.fn().mockResolvedValue({
                 ...OrderCollectionMock.order,
                 items: items,

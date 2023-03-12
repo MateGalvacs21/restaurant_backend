@@ -7,16 +7,17 @@ import { Logger } from '../../services/logger/logger.service';
 
 export class OrderService {
 	private loggerService = new Logger();
-	public async getOrders(restaurantId: string): Promise<OrderDTO[] | []> {
+	public async getOrdersByRestaurant(restaurantId: string): Promise<OrderDTO[] | []> {
 		const orders: DocumentType<Order>[] | [] = await OrderDAO.getOrdersByRestaurant(restaurantId);
 		this.loggerService.success(`Orders were fetched successfully (${restaurantId})`);
 		if (orders.length === 0) {
 			this.loggerService.warn(`This restaurant (${restaurantId}) has no order`);
+			return [];
 		}
 		return OrderMapper.mapToDTOList(orders);
 	}
 
-	public async patchOrder(order: PatchOrder): Promise<OrderDTO | null> {
+	public async patchOrder(order: PatchOrder): Promise<OrderDTO> {
 		const orderDAO: DocumentType<Order> | null = await OrderDAO.patchOrder(order);
 		if (!orderDAO) {
 			this.loggerService.error(`Order modify was no successfully`);
@@ -26,11 +27,11 @@ export class OrderService {
 		return OrderMapper.mapToDTO(orderDAO);
 	}
 
-	public async getOrder(table: string): Promise<OrderDTO[] | []> {
+	public async getOrdersByTable(table: string): Promise<OrderDTO[] | []> {
 		const orders: DocumentType<Order>[] | [] = await OrderDAO.getOrdersByTable(table);
 		if (orders.length === 0) {
 			this.loggerService.error(`This ${table} table has no order`);
-			throw new Error(`This ${table} table has no order`);
+			return [];
 		}
 		this.loggerService.success(`This table ${table} fetched orders successfully`);
 		return OrderMapper.mapToDTOList(orders);
@@ -41,7 +42,7 @@ export class OrderService {
 		this.loggerService.success(`This order ${id} delete successfully`);
 	}
 
-	public async postOrder(postOrder: PostOrder): Promise<OrderDTO | null> {
+	public async postOrder(postOrder: PostOrder): Promise<OrderDTO> {
 		const order: DocumentType<Order> | null = await OrderDAO.postOrder(postOrder);
 		if (!order) {
 			this.loggerService.error(`New order added no successfully`);
