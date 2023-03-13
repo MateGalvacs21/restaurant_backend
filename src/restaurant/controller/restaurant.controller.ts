@@ -6,8 +6,7 @@ import { StatusCodes } from 'http-status-codes';
 
 export class RestaurantController {
 	public getRestaurant = (req: Request, res: Response) => {
-		RestaurantService
-			.getRestaurant(req.params.id)
+		RestaurantService.getRestaurant(req.params.id)
 			.then((restaurant) => {
 				res.status(StatusCodes.OK).json(restaurant);
 			})
@@ -20,8 +19,7 @@ export class RestaurantController {
 		const restaurant: EditMenuRestaurant = {
 			menu: req.body.menu
 		};
-		RestaurantService
-			.patchMenu(req.params.id, restaurant)
+		RestaurantService.patchMenu(req.params.id, restaurant)
 			.then((restaurant) => {
 				res.status(StatusCodes.ACCEPTED).json(restaurant);
 			})
@@ -34,8 +32,7 @@ export class RestaurantController {
 		const restaurant: EditDrinksRestaurant = {
 			drinks: req.body.drinks
 		};
-		RestaurantService
-			.patchDrinks(req.params.id, restaurant)
+		RestaurantService.patchDrinks(req.params.id, restaurant)
 			.then((restaurant) => {
 				res.status(StatusCodes.ACCEPTED).json(restaurant);
 			})
@@ -48,8 +45,7 @@ export class RestaurantController {
 		const restaurant: DeleteRestaurant = {
 			id: new Types.ObjectId(req.params.id).toString()
 		};
-		RestaurantService
-			.deleteRestaurant(restaurant)
+		RestaurantService.deleteRestaurant(restaurant)
 			.then(() => {
 				res.status(StatusCodes.OK).json({ deletedId: restaurant.id });
 			})
@@ -64,8 +60,7 @@ export class RestaurantController {
 			menu: req.body.menu
 		};
 
-		RestaurantService
-			.postRestaurant(restaurant)
+		RestaurantService.postRestaurant(restaurant)
 			.then((restaurant) => {
 				res.status(StatusCodes.CREATED).json(restaurant);
 			})
