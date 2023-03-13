@@ -22,7 +22,7 @@ export class CopyDataService {
 
 	public static async getAllData(restaurantId: string): Promise<CopyDataDTO[] | []> {
 		const data: DocumentType<CopyData>[] = await CopyDataDAO.getAllData(restaurantId);
-		if (data.length===0) return [];
+		if (data.length === 0) return [];
 		this.loggerService.success(`Getting print data for ${restaurantId}`);
 		return CopyDataMapper.mapToDTOList(data);
 	}

@@ -1,163 +1,130 @@
-import {OrderDAO} from "@root/order/dao/order.dao";
-import {OrderCollectionMock} from "@root/shared/mocks/data-mocks/order.mock";
-import {OrderService} from "@root/order/service/order.service";
-import {OrderMapper} from "@root/order/mapper/order/order.mapper";
+import { OrderDAO } from '@root/order/dao/order.dao';
+import { OrderCollectionMock } from '@root/shared/mocks/data-mocks/order.mock';
+import { OrderService } from '@root/order/service/order.service';
+import { OrderMapper } from '@root/order/mapper/order/order.mapper';
 
+describe('Order Service', () => {
+	describe('getOrdersByRestaurant', () => {
+		it('should return with orders if restaurant has order', async () => {
+			const getByRestaurantSpy = jest.spyOn(OrderDAO, 'getOrdersByRestaurant').mockResolvedValue([OrderCollectionMock.order]);
+			const orders = await OrderService.getOrdersByRestaurant(OrderCollectionMock.order.restaurantId);
 
-describe('Order Service', ()=>{
-    describe('getOrdersByRestaurant',()=>{
+			expect(getByRestaurantSpy).toHaveBeenCalledWith(OrderCollectionMock.order.restaurantId);
+			expect(orders).toEqual(OrderMapper.mapToDTOList([OrderCollectionMock.order]));
+		});
 
-        it('should return with orders if restaurant has order',async ()=>{
+		it('should return with empty list if restaurant has no order', async () => {
+			const getByRestaurantSpy = jest.spyOn(OrderDAO, 'getOrdersByRestaurant').mockResolvedValue([]);
+			const orders = await OrderService.getOrdersByRestaurant(OrderCollectionMock.order.restaurantId);
 
-            const getByRestaurantSpy= jest.spyOn(OrderDAO,'getOrdersByRestaurant').mockResolvedValue([OrderCollectionMock.order]);
-            const orders = await OrderService.getOrdersByRestaurant(OrderCollectionMock.order.restaurantId);
+			expect(getByRestaurantSpy).toHaveBeenCalledWith(OrderCollectionMock.order.restaurantId);
+			expect(orders).toEqual([]);
+		});
 
-            expect(getByRestaurantSpy).toHaveBeenCalledWith(OrderCollectionMock.order.restaurantId);
-            expect(orders).toEqual(OrderMapper.mapToDTOList([OrderCollectionMock.order]));
-        });
+		it('should throw error if has problem with mongo query', async () => {
+			const getByRestaurantSpy = jest.spyOn(OrderDAO, 'getOrdersByRestaurant').mockRejectedValue(new Error('some problem'));
+			try {
+				await OrderService.getOrdersByRestaurant(OrderCollectionMock.order.restaurantId);
 
-        it('should return with empty list if restaurant has no order',async ()=>{
+				expect(getByRestaurantSpy).toHaveBeenCalledWith(OrderCollectionMock.order.restaurantId);
+			} catch (error) {
+				expect(error.message).toEqual('some problem');
+			}
+		});
+	});
 
-            const getByRestaurantSpy= jest.spyOn(OrderDAO,'getOrdersByRestaurant').mockResolvedValue([]);
-            const orders = await OrderService.getOrdersByRestaurant(OrderCollectionMock.order.restaurantId);
+	describe('getOrdersByTable', () => {
+		it('should return with orders if restaurant table has order', async () => {
+			const getByTableSpy = jest.spyOn(OrderDAO, 'getOrdersByTable').mockResolvedValue([OrderCollectionMock.order]);
+			const orders = await OrderService.getOrdersByTable(OrderCollectionMock.order.table);
 
-            expect(getByRestaurantSpy).toHaveBeenCalledWith(OrderCollectionMock.order.restaurantId);
-            expect(orders).toEqual([]);
-        });
+			expect(getByTableSpy).toHaveBeenCalledWith(OrderCollectionMock.order.table);
+			expect(orders).toEqual(OrderMapper.mapToDTOList([OrderCollectionMock.order]));
+		});
 
-        it('should throw error if has problem with mongo query',async ()=>{
+		it('should return with empty list if restaurant table has no order', async () => {
+			const getByTableSpy = jest.spyOn(OrderDAO, 'getOrdersByTable').mockResolvedValue([]);
+			const orders = await OrderService.getOrdersByTable(OrderCollectionMock.order.table);
 
-            const getByRestaurantSpy= jest.spyOn(OrderDAO,'getOrdersByRestaurant').mockRejectedValue(new Error('some problem'));
-            try {
+			expect(getByTableSpy).toHaveBeenCalledWith(OrderCollectionMock.order.table);
+			expect(orders).toEqual([]);
+		});
 
-                await OrderService.getOrdersByRestaurant(OrderCollectionMock.order.restaurantId);
+		it('should throw error if has problem with mongo query by table', async () => {
+			const getByTableSpy = jest.spyOn(OrderDAO, 'getOrdersByTable').mockRejectedValue(new Error('some problem'));
+			try {
+				await OrderService.getOrdersByTable(OrderCollectionMock.order.table);
 
-                expect(getByRestaurantSpy).toHaveBeenCalledWith(OrderCollectionMock.order.restaurantId);
+				expect(getByTableSpy).toHaveBeenCalledWith(OrderCollectionMock.order.table);
+			} catch (error) {
+				expect(error.message).toEqual('some problem');
+			}
+		});
+	});
 
-            }catch (error){
-                expect(error.message).toEqual('some problem');
-            }
-        });
-    });
+	describe('patchOrder', () => {
+		it('should update an order if call patch order', async () => {
+			const patchOrderSpy = jest.spyOn(OrderDAO, 'patchOrder').mockResolvedValue(OrderCollectionMock.patchedOrderDAO);
+			const order = await OrderService.patchOrder(OrderCollectionMock.patchOrder);
+			expect(patchOrderSpy).toHaveBeenCalledWith(OrderCollectionMock.patchOrder);
+			expect(order).toEqual(OrderMapper.mapToDTO(OrderCollectionMock.patchedOrderDAO));
+		});
 
-    describe('getOrdersByTable',()=>{
+		it('should throw error if updated order cannot back from dao', async () => {
+			const patchOrderSpy = jest.spyOn(OrderDAO, 'patchOrder').mockResolvedValue(null);
+			try {
+				await OrderService.patchOrder(OrderCollectionMock.patchOrder);
 
-        it('should return with orders if restaurant table has order',async ()=>{
+				expect(patchOrderSpy).toHaveBeenCalledWith(OrderCollectionMock.patchOrder);
+			} catch (error) {
+				expect(error.message).toEqual(`Order modify was no successfully`);
+			}
+		});
+	});
 
-            const getByTableSpy= jest.spyOn(OrderDAO,'getOrdersByTable').mockResolvedValue([OrderCollectionMock.order]);
-            const orders = await OrderService.getOrdersByTable(OrderCollectionMock.order.table);
+	describe('deleteOrder', () => {
+		it('should call delete query in dao', async () => {
+			const deleteOrderSpy = jest.spyOn(OrderDAO, 'deleteOrder').mockResolvedValue(null);
+			await OrderService.deleteOrder(OrderCollectionMock.order._id.toString());
 
-            expect(getByTableSpy).toHaveBeenCalledWith(OrderCollectionMock.order.table);
-            expect(orders).toEqual(OrderMapper.mapToDTOList([OrderCollectionMock.order]));
-        });
+			expect(deleteOrderSpy).toHaveBeenCalledWith(OrderCollectionMock.order._id.toString());
+		});
 
-        it('should return with empty list if restaurant table has no order',async ()=>{
+		it('should throw error if has problem with mongo delete query', async () => {
+			const deleteOrderSpy = jest.spyOn(OrderDAO, 'deleteOrder').mockRejectedValue(new Error('some problem'));
+			try {
+				await OrderService.deleteOrder(OrderCollectionMock.order._id.toString());
 
-            const getByTableSpy= jest.spyOn(OrderDAO,'getOrdersByTable').mockResolvedValue([]);
-            const orders = await OrderService.getOrdersByTable(OrderCollectionMock.order.table);
+				expect(deleteOrderSpy).toHaveBeenCalledWith(OrderCollectionMock.order._id.toString());
+			} catch (error) {
+				expect(error.message).toEqual('some problem');
+			}
+		});
+	});
 
-            expect(getByTableSpy).toHaveBeenCalledWith(OrderCollectionMock.order.table);
-            expect(orders).toEqual([]);
-        });
+	describe('postOrder', () => {
+		it('should return with new order', async () => {
+			const postOrderSpy = jest.spyOn(OrderDAO, 'postOrder').mockResolvedValue(OrderCollectionMock.order);
+			const order = await OrderService.postOrder(OrderCollectionMock.postOrder);
+			const expectedOrder = OrderMapper.mapToDTO(OrderCollectionMock.order);
 
-        it('should throw error if has problem with mongo query by table',async ()=>{
+			expect(postOrderSpy).toHaveBeenCalledWith(OrderCollectionMock.postOrder);
+			expect(order.items).toEqual(expectedOrder.items);
+			expect(order.amount).toEqual(expectedOrder.amount);
+			expect(order.table).toEqual(expectedOrder.table);
+			expect(order.restaurantId).toEqual(expectedOrder.restaurantId);
+			expect(postOrderSpy).toHaveBeenCalled();
+		});
 
-            const getByTableSpy= jest.spyOn(OrderDAO,'getOrdersByTable').mockRejectedValue(new Error('some problem'));
-            try {
+		it('should throw error if dao return with null', async () => {
+			const postOrderSpy = jest.spyOn(OrderDAO, 'postOrder').mockResolvedValue(null);
+			try {
+				await OrderService.postOrder(OrderCollectionMock.postOrder);
 
-                await OrderService.getOrdersByTable(OrderCollectionMock.order.table);
-
-                expect(getByTableSpy).toHaveBeenCalledWith(OrderCollectionMock.order.table);
-
-            }catch (error){
-                expect(error.message).toEqual('some problem');
-            }
-        });
-    });
-
-    describe('patchOrder',()=>{
-
-        it('should update an order if call patch order',async ()=>{
-
-            const patchOrderSpy= jest.spyOn(OrderDAO,'patchOrder').mockResolvedValue(OrderCollectionMock.patchedOrderDAO);
-            const order = await OrderService.patchOrder(OrderCollectionMock.patchOrder);
-            expect(patchOrderSpy).toHaveBeenCalledWith(OrderCollectionMock.patchOrder);
-            expect(order).toEqual(OrderMapper.mapToDTO(OrderCollectionMock.patchedOrderDAO));
-        });
-
-        it('should throw error if updated order cannot back from dao',async ()=>{
-
-            const patchOrderSpy= jest.spyOn(OrderDAO,'patchOrder').mockResolvedValue(null);
-            try {
-
-                await OrderService.patchOrder(OrderCollectionMock.patchOrder);
-
-                expect(patchOrderSpy).toHaveBeenCalledWith(OrderCollectionMock.patchOrder);
-
-            }catch (error){
-                expect(error.message).toEqual(`Order modify was no successfully`);
-            }
-        });
-    });
-
-    describe('deleteOrder',()=>{
-
-        it('should call delete query in dao',async ()=>{
-
-            const deleteOrderSpy= jest.spyOn(OrderDAO,'deleteOrder').mockResolvedValue(null);
-            await OrderService.deleteOrder(OrderCollectionMock.order._id.toString());
-
-            expect(deleteOrderSpy).toHaveBeenCalledWith(OrderCollectionMock.order._id.toString());
-        });
-
-
-        it('should throw error if has problem with mongo delete query',async ()=>{
-
-            const deleteOrderSpy= jest.spyOn(OrderDAO,'deleteOrder').mockRejectedValue(new Error('some problem'));
-            try {
-
-                await OrderService.deleteOrder(OrderCollectionMock.order._id.toString());
-
-                expect(deleteOrderSpy).toHaveBeenCalledWith(OrderCollectionMock.order._id.toString());
-
-            }catch (error){
-                expect(error.message).toEqual('some problem');
-            }
-        });
-    });
-
-    describe('postOrder',()=>{
-
-        it('should return with new order',async ()=>{
-
-            const postOrderSpy= jest.spyOn(OrderDAO,'postOrder').mockResolvedValue(OrderCollectionMock.order);
-            const order= await OrderService.postOrder(OrderCollectionMock.postOrder);
-            const expectedOrder = OrderMapper.mapToDTO(OrderCollectionMock.order);
-
-            expect(postOrderSpy).toHaveBeenCalledWith(OrderCollectionMock.postOrder);
-            expect(order.items).toEqual(expectedOrder.items);
-            expect(order.amount).toEqual(expectedOrder.amount);
-            expect(order.table).toEqual(expectedOrder.table);
-            expect(order.restaurantId).toEqual(expectedOrder.restaurantId);
-            expect(postOrderSpy).toHaveBeenCalled();
-        });
-
-
-        it('should throw error if dao return with null',async ()=>{
-
-            const postOrderSpy= jest.spyOn(OrderDAO,'postOrder').mockResolvedValue(null);
-            try {
-
-                await OrderService.postOrder(OrderCollectionMock.postOrder);
-
-                expect(postOrderSpy).toHaveBeenCalledWith(OrderCollectionMock.postOrder);
-
-            }catch (error){
-                expect(error.message).toEqual('New order added no successfully');
-            }
-        });
-    });
-
-
-
+				expect(postOrderSpy).toHaveBeenCalledWith(OrderCollectionMock.postOrder);
+			} catch (error) {
+				expect(error.message).toEqual('New order added no successfully');
+			}
+		});
+	});
 });
