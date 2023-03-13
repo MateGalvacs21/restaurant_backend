@@ -1,7 +1,12 @@
 import {DrinkItemDTO} from "@root/shared/models/drink-item.dto";
 import {DrinkGroupDTO} from "@root/shared/models/drink-group.dto";
 import {MenuDTO} from "@root/shared/models/menu.dto";
-import {RestaurantDTO} from "@root/shared/models/restaurant.dto";
+import {
+    EditDrinksRestaurant,
+    EditMenuRestaurant,
+    PostRestaurant,
+    RestaurantDTO
+} from "@root/shared/models/restaurant.dto";
 import {DocumentType} from "@typegoose/typegoose";
 import {Restaurant} from "@root/restaurant/model/restaurant.model";
 import {Types} from "mongoose";
@@ -67,5 +72,21 @@ export const RestaurantMock = {
             drinks:DrinkMapper.mapGroupToDAOList(this.drinkGroups),
             _id: new Types.ObjectId("63cc776b9c1f72057706a601")
         } as DocumentType<Restaurant>
+    },
+    get editMenuMock():EditMenuRestaurant {
+        return {
+            menu: this.menu
+        }
+    },
+    get editDrinkMock():EditDrinksRestaurant {
+        return {
+            drinks: this.drinkGroups
+        }
+    },
+    get postRestaurant(): PostRestaurant {
+        return {
+            menu:this.menu,
+            drinks:this.drinkGroups
+        }
     }
 }

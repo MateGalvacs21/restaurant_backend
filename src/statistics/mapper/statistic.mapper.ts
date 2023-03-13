@@ -1,7 +1,7 @@
 import {DocumentType} from "@typegoose/typegoose";
 import {Statistic} from "@root/statistics/model/statistic.model";
 
-import {OrderItemMapper} from "@root/order/mapper/order/helper/order-item.mapper";
+import {OrderItemMapper} from "../../order/mapper/order/helper/order-item.mapper";
 
 export class StatisticMapper {
 

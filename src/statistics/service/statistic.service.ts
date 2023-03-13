@@ -1,6 +1,6 @@
 import { Logger } from '../../services/logger/logger.service';
 import { StatisticDAO } from '../dao/statistic.dao';
-import {StatisticMapper} from "@root/statistics/mapper/statistic.mapper";
+import {StatisticMapper} from "../../statistics/mapper/statistic.mapper";
 
 export class StatisticService {
 	private static loggerService = new Logger();

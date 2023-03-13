@@ -23,9 +23,7 @@ export class RestaurantDAO {
 
 	public static async postRestaurant(newRestaurant: PostRestaurant): Promise<DocumentType<Restaurant>> {
 		this.loggerService.info(`[POST] add new restaurant...`);
-		const restaurant = await RestaurantModel.create(RestaurantMapper.mapToDAO(newRestaurant));
-		await restaurant.save();
-		return restaurant;
+		return await RestaurantModel.create(RestaurantMapper.mapToDAO(newRestaurant));
 	}
 
 	public static async deleteRestaurant(deletedRestaurant: DeleteRestaurant): Promise<void> {
