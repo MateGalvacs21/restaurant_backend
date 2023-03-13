@@ -6,18 +6,21 @@ export class OrderItemMapper {
 	public static mapItemToDAO(orderItemDTO: OrderItemDTO): DocumentType<OrderItem> {
 		return {
 			name: orderItemDTO.name,
+			nickname: orderItemDTO.nickname,
 			price: orderItemDTO.price,
 			items: orderItemDTO.items,
 			extraItems: orderItemDTO.extraItems,
 			removedItems: orderItemDTO.removedItems,
 			afa: orderItemDTO.afa,
-			type: orderItemDTO.type
+			type: orderItemDTO.type,
+			itemsOriginalCount: orderItemDTO.itemsOriginalCount
 		} as DocumentType<OrderItem>;
 	}
 
 	public static mapItemToDTO(orderItemDAO: DocumentType<OrderItem>): OrderItemDTO {
 		return {
 			name: orderItemDAO.name,
+			nickname: orderItemDAO.nickname,
 			type: orderItemDAO.type,
 			afa: orderItemDAO.afa,
 			removedItems: orderItemDAO.removedItems,

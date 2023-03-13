@@ -7,6 +7,9 @@ export class OrderItem {
 	public name: string;
 
 	@prop({ required: true })
+	public nickname: string;
+
+	@prop({ required: true })
 	public price: number;
 
 	@prop({ required: true })
