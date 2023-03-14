@@ -61,7 +61,7 @@ describe('Authentication Service', () => {
 			try {
 				await AuthenticationService.getLoggedUser(UserCollectionMock.user._id.toString());
 				fail();
-			}catch (error){
+			} catch (error) {
 				expect(getDaoMock).toHaveBeenCalled();
 				expect(error.message).toEqual('Not found.');
 			}
