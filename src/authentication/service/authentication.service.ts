@@ -42,7 +42,7 @@ export class AuthenticationService {
 	public static async getLoggedUser(id: string): Promise<LoggedUserDTO | null> {
 		const user = await AuthenticationsDAO.getLoggedUser(id);
 		this.loggerService.success(`Get logged user with ${id} successfully`);
-		if (!user) throw new Error('Not found.');
+		if (!user) return null;
 		return AuthenticationMapper.mapLoggedUserDTO(user);
 	}
 
