@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/:id', controller.getRestaurant);
 router.patch('/:id/drink', controller.patchDrink);
-router.patch('/:id/menu', controller.patchDrink);
+router.patch('/:id/menu', controller.patchMenu);
 router.post('/', controller.postRestaurant);
 router.delete('/:id', controller.deleteRestaurant);
 
