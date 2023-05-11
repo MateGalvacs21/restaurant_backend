@@ -27,6 +27,7 @@ export const RestaurantMock = {
 		return [
 			{
 				afa: 5,
+				name: "alma",
 				nameoftype: 'almaSzorp',
 				items: this.drinkItemsMock
 			}

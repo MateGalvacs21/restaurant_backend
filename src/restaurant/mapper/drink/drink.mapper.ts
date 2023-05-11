@@ -20,6 +20,7 @@ export class DrinkMapper {
 	public static mapGroupToDAO(groupDTO: DrinkGroupDTO): DocumentType<DrinkGroup> {
 		return {
 			nameoftype: groupDTO.nameoftype,
+			name: groupDTO.name,
 			afa: groupDTO.afa,
 			items: this.mapItemToDAOList(groupDTO.items)
 		} as DocumentType<DrinkGroup>;
@@ -44,6 +45,7 @@ export class DrinkMapper {
 	public static mapGroupToDTO(groupDAO: DocumentType<DrinkGroup>): DrinkGroupDTO {
 		return {
 			nameoftype: groupDAO.nameoftype,
+			name: groupDAO.name,
 			afa: groupDAO.afa,
 			items: this.mapItemToDTOList(groupDAO.items)
 		};
