@@ -12,6 +12,9 @@ export class DrinkGroup {
 
 	@prop({ required: true })
 	afa: Afa;
+
+	@prop({required: true})
+	name: string;
 }
 
 export const DrinkGroupModel = getModelForClass(DrinkGroup);
