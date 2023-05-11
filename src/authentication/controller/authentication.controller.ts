@@ -10,7 +10,7 @@ export class AuthenticationController {
 				res.status(StatusCodes.ACCEPTED).json(user);
 			})
 			.catch((error) => {
-				res.status(StatusCodes.BAD_REQUEST).json({error:error.message});
+				res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
 			});
 	};
 
@@ -20,7 +20,7 @@ export class AuthenticationController {
 				res.status(StatusCodes.ACCEPTED).json({ logOut: req.params.id });
 			})
 			.catch((error) => {
-				res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: error.message});
+				res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
 			});
 	};
 
@@ -30,7 +30,7 @@ export class AuthenticationController {
 				res.status(StatusCodes.OK).json(user);
 			})
 			.catch((error) => {
-				res.status(StatusCodes.NOT_FOUND).json({error: error.message});
+				res.status(StatusCodes.NOT_FOUND).json({ error: error.message });
 			});
 	};
 
@@ -41,7 +41,7 @@ export class AuthenticationController {
 				res.status(StatusCodes.CREATED).json(createdUser);
 			})
 			.catch((error) => {
-				res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error:error.message});
+				res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
 			});
 	};
 
@@ -51,7 +51,7 @@ export class AuthenticationController {
 				res.status(StatusCodes.ACCEPTED).json(user);
 			})
 			.catch((error) => {
-				res.status(StatusCodes.BAD_REQUEST).json({error:error.message});
+				res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
 			});
 	};
 }

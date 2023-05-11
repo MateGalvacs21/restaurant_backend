@@ -9,7 +9,18 @@ export class StatisticController {
 				res.status(StatusCodes.OK).json(orders);
 			})
 			.catch((error) => {
-				res.status(StatusCodes.NOT_FOUND).json(error);
+				res.status(StatusCodes.NOT_FOUND).json({ error: error.message });
+			});
+	};
+
+	public backUpStatistics = (req: Request, res: Response) => {
+		const payOption = Boolean(req.params.payWithCard);
+		StatisticService.BackUp(req.params.id, payOption)
+			.then(() => {
+				res.status(StatusCodes.OK).json({ stored: req.params.id });
+			})
+			.catch((error) => {
+				res.status(StatusCodes.NOT_FOUND).json({ error: error.message });
 			});
 	};
 }

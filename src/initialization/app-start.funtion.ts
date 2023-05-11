@@ -7,9 +7,9 @@ import { OrderRoutes } from '../order/routes/order.route';
 import { PrintDataRoutes } from '../copydata/routes/copy-data.route';
 import { StatisticRoutes } from '../statistics/routes/statistic.route';
 import { AuthenticationRoutes } from '../authentication/routes/authentication.route';
-import { AppService } from '../services/app/app.service';
+import { AuthenticationService } from '../authentication/service/authentication.service';
 const loggerService = new Logger();
-export const start = () => {
+export const start = async () => {
 	const app: Application = express();
 	app.use(express.json());
 	app.use(cors({ origin: '*' }));
@@ -18,7 +18,7 @@ export const start = () => {
 	app.use('/api/printer', PrintDataRoutes);
 	app.use('/api/statistics', StatisticRoutes);
 	app.use('/api/authentication', AuthenticationRoutes);
-	AppService.startWatchExpired();
+	await AuthenticationService.expired();
 	app.listen(ConfigurationService.ServerPort, () => loggerService.success(`Server is run at ${ConfigurationService.ServerPort} port!`));
 };
 

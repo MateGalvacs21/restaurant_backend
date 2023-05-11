@@ -9,7 +9,7 @@ import { Order } from '@root/order/model/order.model';
 export class CopyDataService {
 	public static loggerService = new Logger();
 
-	public static async copyData(order: DocumentType<Order>): Promise<CopyDataDTO | null> {
+	public static async copyData(order: DocumentType<Order>): Promise<CopyDataDTO> {
 		const data: DocumentType<CopyData> = await CopyDataDAO.CopyData(order);
 		this.loggerService.success(`Order with ${order.id} id copied successfully`);
 		return CopyDataMapper.mapToDTO(data);
@@ -20,8 +20,9 @@ export class CopyDataService {
 		this.loggerService.success('Data print successfully');
 	}
 
-	public static async getAllData(restaurantId: string): Promise<CopyDataDTO[]> {
+	public static async getAllData(restaurantId: string): Promise<CopyDataDTO[] | []> {
 		const data: DocumentType<CopyData>[] = await CopyDataDAO.getAllData(restaurantId);
+		if (data.length === 0) return [];
 		this.loggerService.success(`Getting print data for ${restaurantId}`);
 		return CopyDataMapper.mapToDTOList(data);
 	}

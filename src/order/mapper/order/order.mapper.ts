@@ -44,8 +44,4 @@ export class OrderMapper {
 	public static mapToDTOList(orderDAOList: DocumentType<Order>[]): OrderDTO[] {
 		return orderDAOList.map((dao) => this.mapToDTO(dao));
 	}
-
-	public static mapToDAOList(orderDTOList: OrderDTO[]): DocumentType<Order>[] {
-		return orderDTOList.map((dto) => this.mapToDAO(dto));
-	}
 }

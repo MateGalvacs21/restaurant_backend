@@ -42,4 +42,11 @@ describe('Authentication Mapper', () => {
 
 		expect(mappedList).toEqual([UserCollectionMock.logged[1]._id]);
 	});
+
+	it('should return empty list if no have expired token', () => {
+		const loggedUsers = [UserCollectionMock.logged[0]];
+		const mappedList = AuthenticationMapper.mapExpiredIds(loggedUsers, new Date('2023-03-10'));
+
+		expect(mappedList).toEqual([]);
+	});
 });

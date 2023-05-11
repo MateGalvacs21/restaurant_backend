@@ -1,7 +1,7 @@
 import { DocumentType } from '@typegoose/typegoose';
 import { User } from '@root/authentication/model/authentication.model';
 import { Types } from 'mongoose';
-import {LoggedUserDTO, LoginDTO, RegisterDTO} from '@root/shared/models/authentication.dto';
+import { LoggedUserDTO, LoginDTO, RegisterDTO } from '@root/shared/models/authentication.dto';
 import { LoggedUser } from '@root/authentication/model/loged-user.model';
 export const UserCollectionMock = {
 	get user(): DocumentType<User> {
@@ -18,7 +18,7 @@ export const UserCollectionMock = {
 	get loginData(): LoginDTO {
 		return {
 			email: 'test@example.com',
-			password: '$2b$10$hbAxVr2GNeYJT2u6dRY4iu0s3pVH/6KGHhbLwS8CW0R1wGqf8Y49O',
+			password: '$2b$10$hbAxVr2GNeYJT2u6dRY4iu0s3pVH/6KGHhbLwS8CW0R1wGqf8Y49O'
 		} as LoginDTO;
 	},
 

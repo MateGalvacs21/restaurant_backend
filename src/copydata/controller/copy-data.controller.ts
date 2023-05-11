@@ -9,7 +9,7 @@ export class CopyDataController {
 				res.status(StatusCodes.OK).json(data);
 			})
 			.catch((error) => {
-				res.status(StatusCodes.NOT_FOUND).json(error);
+				res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
 			});
 	};
 
@@ -19,7 +19,7 @@ export class CopyDataController {
 				res.status(StatusCodes.OK).json({ deletedTable: req.params.table });
 			})
 			.catch((error) => {
-				res.status(StatusCodes.NOT_FOUND).json(error);
+				res.status(StatusCodes.NOT_FOUND).json({ error: error.message });
 			});
 	};
 }

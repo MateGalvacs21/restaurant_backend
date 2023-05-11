@@ -16,10 +16,10 @@ export class AuthenticationMapper {
 		};
 	}
 
-	public static mapExpiredIds(loggedList: DocumentType<LoggedUser>[], date: Date): Types.ObjectId[] {
-		return loggedList
-			.filter((user) => date.getFullYear() !== user.date.getFullYear() || date.getMonth() + 1 !== user.date.getMonth() + 1 || date.getDate() !== user.date.getDate())
-			.map((expired) => expired._id);
+	public static mapExpiredIds(loggedList: DocumentType<LoggedUser>[], date: Date): Types.ObjectId[] | [] {
+		const filtered = loggedList.filter((user) => date.getFullYear() !== user.date.getFullYear() || date.getMonth() + 1 !== user.date.getMonth() + 1 || date.getDate() !== user.date.getDate());
+		if (filtered.length === 0) return [];
+		return filtered.map((expired) => expired._id);
 	}
 
 	public static mapToDAO(dto: RegisterDTO): DocumentType<User> {

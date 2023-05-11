@@ -56,15 +56,24 @@ describe('Authentication Service', () => {
 			expect(user.id).toEqual(UserCollectionMock.user._id.toString());
 		});
 
-		it('should throw error, if this user not logged', async () => {
-			const getDaoMock = jest.spyOn(AuthenticationsDAO, 'getLoggedUser').mockResolvedValue(null);
+		it('should throw error, if anything problem', async () => {
+			const getDaoMock = jest.spyOn(AuthenticationsDAO, 'getLoggedUser').mockRejectedValue(new Error('Not found.'));
 			try {
 				await AuthenticationService.getLoggedUser(UserCollectionMock.user._id.toString());
-				fail();
-			}catch (error){
 				expect(getDaoMock).toHaveBeenCalled();
+			} catch (error) {
 				expect(error.message).toEqual('Not found.');
 			}
+		});
+
+		it('should return null, if this user not logged', async () => {
+			const getDaoMock = jest.spyOn(AuthenticationsDAO, 'getLoggedUser').mockResolvedValue(null);
+				const user= await AuthenticationService.getLoggedUser(UserCollectionMock.user._id.toString());
+
+
+				expect(getDaoMock).toHaveBeenCalled();
+				expect(user).toEqual(null);
+
 		});
 	});
 
@@ -129,12 +138,23 @@ describe('Authentication Service', () => {
 			jest.resetAllMocks();
 		});
 
-		it('should not run if no have expired token', async () => {
+		it('should not run if no have token', async () => {
 			const getAllMock = jest.spyOn(AuthenticationsDAO, 'getAllLogged').mockResolvedValue([]);
 			const expiredMock = jest.spyOn(AuthenticationsDAO, 'expired').mockImplementation();
 			await AuthenticationService.expired(new Date('2023-03-10'));
 
 			expect(getAllMock).toHaveBeenCalled();
+			expect(expiredMock).not.toHaveBeenCalled();
+		});
+
+		it('should not run if no have expired token', async () => {
+			const getAllMock = jest.spyOn(AuthenticationsDAO, 'getAllLogged').mockResolvedValue([UserCollectionMock.logged[0]]);
+			const mapperSpy = jest.spyOn(AuthenticationMapper, 'mapExpiredIds').mockReturnValue([]);
+			const expiredMock = jest.spyOn(AuthenticationsDAO, 'expired').mockImplementation();
+			await AuthenticationService.expired(new Date('2023-03-10'));
+
+			expect(getAllMock).toHaveBeenCalled();
+			expect(mapperSpy).toHaveBeenCalled();
 			expect(expiredMock).not.toHaveBeenCalled();
 		});
 

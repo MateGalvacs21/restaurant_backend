@@ -1,8 +1,9 @@
 {
-  "name": "libary-project-backend",
+  "name": "restaurant-management-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "description": "This application is an restaurant management app, what can serve restaurant business logic",
+  "main": "index.js",
+  "licence": "OL",
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",

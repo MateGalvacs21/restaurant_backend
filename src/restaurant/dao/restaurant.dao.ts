@@ -11,21 +11,19 @@ export class RestaurantDAO {
 		return RestaurantModel.findOne({ _id: id });
 	}
 
-	public static async patchRestaurantMenu(id: string, newMenu: EditMenuRestaurant): Promise<DocumentType<Restaurant> | null> {
+	public static async patchRestaurantMenu(id: string, newMenu: EditMenuRestaurant): Promise<DocumentType<Restaurant>> {
 		this.loggerService.info(`[PATCH] restaurant with ${id} restaurant id and modify its menu...`);
 		return RestaurantModel.findOneAndUpdate({ _id: id }, { $set: { menu: newMenu.menu } }, { new: true });
 	}
 
-	public static async patchRestaurantDrink(id: string, newDrink: EditDrinksRestaurant): Promise<DocumentType<Restaurant> | null> {
+	public static async patchRestaurantDrink(id: string, newDrink: EditDrinksRestaurant): Promise<DocumentType<Restaurant>> {
 		this.loggerService.info(`[PATCH] restaurant with ${id} restaurant id and modify its drinks...`);
 		return RestaurantModel.findOneAndUpdate({ _id: id }, { $set: { drinks: newDrink.drinks } }, { new: true });
 	}
 
-	public static async postRestaurant(newRestaurant: PostRestaurant): Promise<DocumentType<Restaurant> | null> {
+	public static async postRestaurant(newRestaurant: PostRestaurant): Promise<DocumentType<Restaurant>> {
 		this.loggerService.info(`[POST] add new restaurant...`);
-		const restaurant = await RestaurantModel.create(RestaurantMapper.mapToDAO(newRestaurant));
-		await restaurant.save();
-		return restaurant;
+		return await RestaurantModel.create(RestaurantMapper.mapToDAO(newRestaurant));
 	}
 
 	public static async deleteRestaurant(deletedRestaurant: DeleteRestaurant): Promise<void> {
