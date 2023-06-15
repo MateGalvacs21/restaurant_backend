@@ -21,7 +21,7 @@ describe('Statistics Service', () => {
 		const getBackupSpy = jest.spyOn(StatisticDAO, 'getStatistics').mockResolvedValue([statistics]);
 		const backUps = await StatisticService.getStatistics(OrderCollectionMock.order.restaurantId, OrderCollectionMock.order.date);
 
-		expect(getBackupSpy).toHaveBeenCalledWith(OrderCollectionMock.order.restaurantId, OrderCollectionMock.order.date);
+		expect(getBackupSpy).toHaveBeenCalledWith(OrderCollectionMock.order.restaurantId);
 		expect(backUps[0]).toEqual(StatisticMapper.mapToDTO(statistics));
 	});
 
@@ -29,7 +29,7 @@ describe('Statistics Service', () => {
 		const getBackupSpy = jest.spyOn(StatisticDAO, 'getStatistics').mockResolvedValue([]);
 		const backUps = await StatisticService.getStatistics(OrderCollectionMock.order.restaurantId, OrderCollectionMock.order.date);
 
-		expect(getBackupSpy).toHaveBeenCalledWith(OrderCollectionMock.order.restaurantId, OrderCollectionMock.order.date);
+		expect(getBackupSpy).toHaveBeenCalledWith(OrderCollectionMock.order.restaurantId);
 		expect(backUps).toEqual([]);
 	});
 });
