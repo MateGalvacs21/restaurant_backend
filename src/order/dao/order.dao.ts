@@ -29,7 +29,7 @@ export class OrderDAO {
 	}
 
 	public static async deleteOrder(id: string): Promise<void> {
-		OrderModel.findOneAndDelete({ _id: id });
+		await OrderModel.findOneAndDelete({ _id: id });
 		this.loggerService.info(`[DELETE] order with ${id} id....`);
 	}
 
