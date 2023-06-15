@@ -11,6 +11,7 @@ describe('Statistics Controller', () => {
 	const reqMock = {
 		params: {
 			restaurantId: OrderCollectionMock.order.restaurantId,
+			date: OrderCollectionMock.order.date,
 			payWithCard: false,
 			id: OrderCollectionMock.order._id.toString()
 		}
@@ -31,7 +32,7 @@ describe('Statistics Controller', () => {
 		const serviceSpy = jest.spyOn(StatisticService, 'getStatistics').mockResolvedValue([backup]);
 		await controller.getStatistics(reqMock, resMock);
 
-		expect(serviceSpy).toHaveBeenCalledWith(reqMock.params.restaurantId);
+		expect(serviceSpy).toHaveBeenCalledWith(reqMock.params.restaurantId, reqMock.params.date);
 		expect(resMock.status).toHaveBeenCalledWith(StatusCodes.OK);
 		expect(resMock.json).toHaveBeenCalledWith([backup]);
 	});
@@ -44,7 +45,7 @@ describe('Statistics Controller', () => {
 		const serviceSpy = jest.spyOn(StatisticService, 'getStatistics').mockResolvedValue([]);
 		await controller.getStatistics(reqMock, resMock);
 
-		expect(serviceSpy).toHaveBeenCalledWith(reqMock.params.restaurantId);
+		expect(serviceSpy).toHaveBeenCalledWith(reqMock.params.restaurantId, reqMock.params.date);
 		expect(resMock.status).toHaveBeenCalledWith(StatusCodes.OK);
 		expect(resMock.json).toHaveBeenCalledWith([]);
 	});
@@ -57,7 +58,7 @@ describe('Statistics Controller', () => {
 		const serviceSpy = jest.spyOn(StatisticService, 'getStatistics').mockRejectedValue(new Error('Test error'));
 		try {
 			await controller.getStatistics(reqMock, resMock);
-			expect(serviceSpy).toHaveBeenCalledWith(reqMock.params.restaurantId);
+			expect(serviceSpy).toHaveBeenCalledWith(reqMock.params.restaurantId, reqMock.params.date);
 		} catch (error) {
 			expect(resMock.status).toHaveBeenCalledWith(StatusCodes.NOT_FOUND);
 			expect(resMock.json).toHaveBeenCalledWith({ error: error.message });
