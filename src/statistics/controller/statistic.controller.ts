@@ -4,7 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 
 export class StatisticController {
 	public getStatistics = (req: Request, res: Response) => {
-		StatisticService.getStatistics(req.params.restaurantId)
+		StatisticService.getStatistics(req.params.restaurantId, req.params.date)
 			.then((orders) => {
 				res.status(StatusCodes.OK).json(orders);
 			})

@@ -19,17 +19,17 @@ describe('Statistics Service', () => {
 			payWithCard: false
 		} as DocumentType<Statistic>;
 		const getBackupSpy = jest.spyOn(StatisticDAO, 'getStatistics').mockResolvedValue([statistics]);
-		const backUps = await StatisticService.getStatistics(OrderCollectionMock.order.restaurantId);
+		const backUps = await StatisticService.getStatistics(OrderCollectionMock.order.restaurantId, OrderCollectionMock.order.date);
 
-		expect(getBackupSpy).toHaveBeenCalledWith(OrderCollectionMock.order.restaurantId);
+		expect(getBackupSpy).toHaveBeenCalledWith(OrderCollectionMock.order.restaurantId, OrderCollectionMock.order.date);
 		expect(backUps[0]).toEqual(StatisticMapper.mapToDTO(statistics));
 	});
 
 	it('should return empty list if restaurant has no statistics', async () => {
 		const getBackupSpy = jest.spyOn(StatisticDAO, 'getStatistics').mockResolvedValue([]);
-		const backUps = await StatisticService.getStatistics(OrderCollectionMock.order.restaurantId);
+		const backUps = await StatisticService.getStatistics(OrderCollectionMock.order.restaurantId, OrderCollectionMock.order.date);
 
-		expect(getBackupSpy).toHaveBeenCalledWith(OrderCollectionMock.order.restaurantId);
+		expect(getBackupSpy).toHaveBeenCalledWith(OrderCollectionMock.order.restaurantId, OrderCollectionMock.order.date);
 		expect(backUps).toEqual([]);
 	});
 });
