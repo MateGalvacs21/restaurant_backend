@@ -75,7 +75,9 @@ describe('OrderDao', () => {
 			await OrderDAO.patchOrder({
 				id: OrderCollectionMock.order._id.toString(),
 				amount: OrderCollectionMock.order.amount + 3000,
-				items: items
+				items: items,
+				afa5: OrderCollectionMock.order.afa5 + 3000,
+				afa27: OrderCollectionMock.order.afa27
 			});
 
 			expect(OrderModel.findOneAndUpdate).toHaveBeenCalledWith(
@@ -83,7 +85,9 @@ describe('OrderDao', () => {
 				{
 					$set: {
 						amount: OrderCollectionMock.order.amount + 3000,
-						items: items
+						items: items,
+						afa5: OrderCollectionMock.order.afa5 + 3000,
+						afa27: OrderCollectionMock.order.afa27
 					}
 				},
 				{ new: true }

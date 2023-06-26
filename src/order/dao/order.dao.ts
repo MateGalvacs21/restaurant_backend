@@ -40,7 +40,9 @@ export class OrderDAO {
 			{
 				$set: {
 					amount: order.amount,
-					items: order.items
+					items: order.items,
+					afa5: order.afa5,
+					afa27: order.afa27
 				}
 			},
 			{ new: true }

@@ -18,4 +18,6 @@ export type PatchOrder = {
 	id: string;
 	items: OrderItemDTO[];
 	amount: number;
+	afa27: number;
+	afa5: number;
 };

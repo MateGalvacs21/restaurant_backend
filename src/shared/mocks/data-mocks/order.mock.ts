@@ -112,11 +112,13 @@ export const OrderCollectionMock = {
 					extraItems: [],
 					removedItems: [],
 					type: 'salata',
-					nickname: 'asd'
+					nickname: 'asd',
 				}
 			],
 			id: OrderCollectionMock.order._id.toString(),
-			amount: OrderCollectionMock.order.amount + 3000
+			amount: OrderCollectionMock.order.amount + 3000,
+			afa5: OrderCollectionMock.order.afa5 +3000,
+			afa27: OrderCollectionMock.order.afa27
 		};
 	},
 
