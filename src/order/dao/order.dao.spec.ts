@@ -56,6 +56,7 @@ describe('OrderDao', () => {
 	describe('patchOrder', () => {
 		it('should update order with new items and amount', async () => {
 			const orderItem: OrderItemDTO = {
+				id: 61,
 				items: ['test'],
 				removedItems: [],
 				type: 'foetel',

@@ -1,6 +1,7 @@
 import { Afa } from './coin.model';
 
 export type OrderItemDTO = {
+	id: number;
 	name: string;
 	nickname: string;
 	price: number;

@@ -4,6 +4,9 @@ import { Afa } from '@root/shared/models/coin.model';
 @modelOptions({ options: { allowMixed: Severity.ALLOW, customName: 'orders' } })
 export class OrderItem {
 	@prop({ required: true })
+	public id: number;
+
+	@prop({ required: true })
 	public name: string;
 
 	@prop({ required: true })

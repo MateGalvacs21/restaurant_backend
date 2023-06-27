@@ -18,6 +18,7 @@ export const OrderCollectionMock = {
 			afa5: 15000,
 			items: OrderItemMapper.mapItemToDAOList([
 				{
+					id:1,
 					name: 'TestEtel',
 					price: 3000,
 					afa: 5,
@@ -29,6 +30,7 @@ export const OrderCollectionMock = {
 					nickname: 'asd'
 				},
 				{
+					id:2,
 					name: 'TestEtel',
 					price: 2000,
 					afa: 5,
@@ -40,6 +42,7 @@ export const OrderCollectionMock = {
 					nickname: 'asd'
 				},
 				{
+					id:3,
 					name: 'TestEtel',
 					price: 3000,
 					afa: 5,
@@ -51,6 +54,7 @@ export const OrderCollectionMock = {
 					nickname: 'asd'
 				},
 				{
+					id: 4,
 					name: 'TestEtel',
 					price: 2000,
 					afa: 5,
@@ -62,6 +66,7 @@ export const OrderCollectionMock = {
 					nickname: 'asd'
 				},
 				{
+					id: 5,
 					name: 'TestEtel',
 					price: 3000,
 					afa: 5,
@@ -73,6 +78,7 @@ export const OrderCollectionMock = {
 					nickname: 'asd'
 				},
 				{
+					id: 6,
 					name: 'TestEtel',
 					price: 2000,
 					afa: 5,
@@ -88,6 +94,7 @@ export const OrderCollectionMock = {
 	},
 	get orderItemDTO(): OrderItemDTO {
 		return {
+			id:7,
 			name: 'test',
 			nickname: 'test nickname',
 			price: 5000,
@@ -104,6 +111,7 @@ export const OrderCollectionMock = {
 			items: [
 				...OrderItemMapper.mapItemToDTOList(OrderCollectionMock.order.items),
 				{
+					id:12,
 					name: 'TestEtel',
 					price: 3000,
 					afa: 5,
