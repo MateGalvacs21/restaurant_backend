@@ -38,7 +38,9 @@ export class OrderController {
 		const patchOrder: PatchOrder = {
 			id: req.params.id,
 			items: req.body.items,
-			amount: req.body.amount
+			amount: req.body.amount,
+			afa5: req.body.afa5,
+			afa27: req.body.afa27
 		};
 
 		OrderService.patchOrder(patchOrder)

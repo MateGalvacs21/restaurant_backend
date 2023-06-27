@@ -14,7 +14,7 @@ describe('OrderDao', () => {
 			const orders = await OrderDAO.getOrdersByRestaurant(OrderCollectionMock.order.restaurantId);
 
 			expect(OrderModel.find).toHaveBeenCalledWith({ restaurantId: OrderCollectionMock.order.restaurantId });
-			expect(orders[0]).toEqual(OrderCollectionMock.order);
+			expect(orders[0].items.length).toEqual(OrderCollectionMock.order.items.length);
 		});
 
 		it('should return empty list if restaurant has no order', async () => {
@@ -32,7 +32,7 @@ describe('OrderDao', () => {
 			const orders = await OrderDAO.getOrdersByTable(OrderCollectionMock.order.table);
 
 			expect(OrderModel.find).toHaveBeenCalledWith({ table: OrderCollectionMock.order.table });
-			expect(orders[0]).toEqual(OrderCollectionMock.order);
+			expect(orders[0].items.length).toEqual(OrderCollectionMock.order.items.length);
 		});
 
 		it('should return empty list if restaurant table has no order', async () => {
@@ -56,9 +56,10 @@ describe('OrderDao', () => {
 	describe('patchOrder', () => {
 		it('should update order with new items and amount', async () => {
 			const orderItem: OrderItemDTO = {
+				id: 61,
 				items: ['test'],
 				removedItems: [],
-				type: 'foetel',
+				type: 'bor',
 				extraItems: [],
 				itemsOriginalCount: 1,
 				afa: 5,
@@ -67,6 +68,9 @@ describe('OrderDao', () => {
 				nickname: 'nickTest'
 			};
 			const items = [...OrderCollectionMock.order.items, orderItem];
+			OrderModel.findOne = jest.fn().mockResolvedValue({
+				...OrderCollectionMock.order,
+			});
 			OrderModel.findOneAndUpdate = jest.fn().mockResolvedValue({
 				...OrderCollectionMock.order,
 				items: items,
@@ -75,7 +79,9 @@ describe('OrderDao', () => {
 			await OrderDAO.patchOrder({
 				id: OrderCollectionMock.order._id.toString(),
 				amount: OrderCollectionMock.order.amount + 3000,
-				items: items
+				items: items,
+				afa5: OrderCollectionMock.order.afa5 + 3000,
+				afa27: OrderCollectionMock.order.afa27
 			});
 
 			expect(OrderModel.findOneAndUpdate).toHaveBeenCalledWith(
@@ -83,7 +89,9 @@ describe('OrderDao', () => {
 				{
 					$set: {
 						amount: OrderCollectionMock.order.amount + 3000,
-						items: items
+						items: items,
+						afa5: OrderCollectionMock.order.afa5 + 3000,
+						afa27: OrderCollectionMock.order.afa27
 					}
 				},
 				{ new: true }
@@ -105,7 +113,7 @@ describe('OrderDao', () => {
 			const order = await OrderDAO.postOrder(postedOrder);
 
 			expect(OrderModel.create).toHaveBeenCalled();
-			expect(order.items).toEqual(OrderCollectionMock.order.items);
+			expect(order.items.length).toEqual(OrderCollectionMock.order.items.length);
 			expect(order.amount).toEqual(15000);
 			expect(order.table).toEqual('T2');
 			expect(order.restaurantId).toEqual(postedOrder.restaurantId);

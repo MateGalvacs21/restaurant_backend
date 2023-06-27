@@ -176,7 +176,9 @@ describe('Order controller', () => {
 			},
 			body: {
 				items: OrderItemMapper.mapItemToDTOList(OrderCollectionMock.order.items),
-				amount: OrderCollectionMock.order.amount
+				amount: OrderCollectionMock.order.amount,
+				afa5: 15000,
+				afa27: 0
 			}
 		} as unknown as Request;
 
