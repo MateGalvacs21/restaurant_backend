@@ -5,7 +5,7 @@ import { OrderItem } from '../../../model/helper/order-item.model';
 export class OrderItemMapper {
 	public static mapItemToDAO(orderItemDTO: OrderItemDTO): DocumentType<OrderItem> {
 		return {
-			id: orderItemDTO.id,
+			id: Math.floor(Math.random()*100000),
 			name: orderItemDTO.name,
 			nickname: orderItemDTO.nickname,
 			price: orderItemDTO.price,
@@ -20,7 +20,7 @@ export class OrderItemMapper {
 
 	public static mapItemToDTO(orderItemDAO: DocumentType<OrderItem>): OrderItemDTO {
 		return {
-			id: Math.floor(Math.random()*100000),
+			id: orderItemDAO.id,
 			name: orderItemDAO.name,
 			nickname: orderItemDAO.nickname,
 			type: orderItemDAO.type,
