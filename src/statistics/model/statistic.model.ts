@@ -4,7 +4,7 @@ import { Order } from '../../order/model/order.model';
 @modelOptions({ options: { allowMixed: Severity.ALLOW, customName: 'statistics' } })
 export class Statistic extends Order {
 	@prop({required: true})
-	payWithCard: string;
+	card: string;
 }
 
 export const StatisticModel = getModelForClass(Statistic);

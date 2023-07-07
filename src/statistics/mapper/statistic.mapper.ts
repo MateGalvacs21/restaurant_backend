@@ -14,7 +14,7 @@ export class StatisticMapper {
 			afa5: stat.afa5,
 			date: stat.date,
 			id: stat.id,
-			payWithCard: stat.payWithCard
+			payWithCard: stat.card
 		};
 	}
 

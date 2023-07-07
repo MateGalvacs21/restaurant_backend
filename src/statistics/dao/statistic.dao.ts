@@ -17,7 +17,7 @@ export class StatisticDAO {
             amount: order.amount,
             afa5: order.afa5,
             afa27: order.afa27,
-            payWithCard: payWithCard
+            card: payWithCard
         } as DocumentType<Statistic>;
         await StatisticModel.insertMany(statistics);
         this.loggerService.info(`[BACKUP] store order with ${id} id...`);
