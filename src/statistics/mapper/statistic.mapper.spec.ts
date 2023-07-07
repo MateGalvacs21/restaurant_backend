@@ -7,12 +7,12 @@ describe('Statistics Mapper', () => {
 	it('should return dto from statistics', () => {
 		const stat = {
 			...OrderCollectionMock.order,
-			payWithCard: false
+			card: 'false'
 		} as DocumentType<Statistic>;
 
 		const mapped = StatisticMapper.mapToDTO(stat);
 
-		expect(mapped.payWithCard).toEqual(stat.payWithCard);
+		expect(mapped.payWithCard).toEqual(stat.card);
 		expect(mapped.restaurantId).toEqual(stat.restaurantId);
 	});
 
@@ -20,13 +20,13 @@ describe('Statistics Mapper', () => {
 		const stat = [
 			{
 				...OrderCollectionMock.order,
-				payWithCard: false
+				card: 'false'
 			}
 		] as DocumentType<Statistic>[];
 
 		const mapped = StatisticMapper.mapToDTOList(stat);
 
-		expect(mapped[0].payWithCard).toEqual(stat[0].payWithCard);
+		expect(mapped[0].payWithCard).toEqual(stat[0].card);
 		expect(mapped[0].restaurantId).toEqual(stat[0].restaurantId);
 	});
 });

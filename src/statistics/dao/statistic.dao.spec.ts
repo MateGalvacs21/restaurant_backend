@@ -9,16 +9,16 @@ describe('StatisticsDao', () => {
 	it('should backup after after close an order', async () => {
 		StatisticModel.insertMany = jest.fn().mockResolvedValue(OrderCollectionMock.order);
 		OrderModel.findOne = jest.fn().mockResolvedValue(OrderCollectionMock.order);
-		await StatisticDAO.BackUp(OrderCollectionMock.order._id.toString(), false);
+		await StatisticDAO.BackUp(OrderCollectionMock.order._id.toString(), 'false');
 
 		expect(OrderModel.findOne).toHaveBeenCalledWith({ _id: OrderCollectionMock.order._id.toString() });
-		expect(StatisticModel.insertMany).toHaveBeenCalledWith({ ...OrderCollectionMock.order, payWithCard: false });
+		expect(StatisticModel.insertMany).toHaveBeenCalledWith({ ...OrderCollectionMock.order, card: 'false' });
 	});
 
 	it('should getAllStatistics by restaurant id', async () => {
 		const statistic = {
 			...OrderCollectionMock.order,
-			payWithCard: false
+			card: 'false'
 		} as DocumentType<Statistic>;
 		StatisticModel.find = jest.fn().mockResolvedValue([StatisticMapper.mapToDTO(statistic)]);
 		const statistics = await StatisticDAO.getStatistics(OrderCollectionMock.order.restaurantId);
