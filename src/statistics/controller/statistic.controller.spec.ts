@@ -25,7 +25,7 @@ describe('Statistics Controller', () => {
 		} as unknown as Response;
 		const stat = {
 			...OrderCollectionMock.order,
-			payWithCard: false
+			card: 'false'
 		} as DocumentType<Statistic>;
 
 		const backup = StatisticMapper.mapToDTO(stat);

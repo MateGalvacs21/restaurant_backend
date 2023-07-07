@@ -8,15 +8,15 @@ import { StatisticMapper } from '@root/statistics/mapper/statistic.mapper';
 describe('Statistics Service', () => {
 	it('should backup success an order', async () => {
 		const backUpMock = jest.spyOn(StatisticDAO, 'BackUp').mockResolvedValue(null);
-		await StatisticService.BackUp(OrderCollectionMock.order._id.toString(), false);
+		await StatisticService.BackUp(OrderCollectionMock.order._id.toString(), 'false');
 
-		expect(backUpMock).toHaveBeenCalledWith(OrderCollectionMock.order._id.toString(), false);
+		expect(backUpMock).toHaveBeenCalledWith(OrderCollectionMock.order._id.toString(), 'false');
 	});
 
 	it('should get all backup by restaurant id', async () => {
 		const statistics = {
 			...OrderCollectionMock.order,
-			payWithCard: false
+			card: 'false'
 		} as DocumentType<Statistic>;
 		const getBackupSpy = jest.spyOn(StatisticDAO, 'getStatistics').mockResolvedValue([statistics]);
 		const backUps = await StatisticService.getStatistics(OrderCollectionMock.order.restaurantId, OrderCollectionMock.order.date);
