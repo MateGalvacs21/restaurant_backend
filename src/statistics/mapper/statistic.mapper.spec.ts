@@ -12,7 +12,7 @@ describe('Statistics Mapper', () => {
 
 		const mapped = StatisticMapper.mapToDTO(stat);
 
-		expect(mapped.payWithCard).toEqual(stat.card);
+		expect(mapped.card).toEqual(stat.card);
 		expect(mapped.restaurantId).toEqual(stat.restaurantId);
 	});
 
@@ -26,7 +26,7 @@ describe('Statistics Mapper', () => {
 
 		const mapped = StatisticMapper.mapToDTOList(stat);
 
-		expect(mapped[0].payWithCard).toEqual(stat[0].card);
+		expect(mapped[0].card).toEqual(stat[0].card);
 		expect(mapped[0].restaurantId).toEqual(stat[0].restaurantId);
 	});
 });
