@@ -6,7 +6,7 @@ import { Logger } from '../../services/logger/logger.service';
 export class StatisticDAO {
     private static loggerService = new Logger();
 
-    public static async BackUp(id: string, payWithCard: boolean): Promise<void> {
+    public static async BackUp(id: string, payWithCard: string): Promise<void> {
         const order = await OrderModel.findOne({_id: id});
         const statistics: DocumentType<Statistic> = {
             _id: order._id,

@@ -4,7 +4,7 @@ import { StatisticMapper } from '../../statistics/mapper/statistic.mapper';
 
 export class StatisticService {
 	private static loggerService = new Logger();
-	public static async BackUp(id: string, payWithCard: boolean): Promise<void> {
+	public static async BackUp(id: string, payWithCard: string): Promise<void> {
 		await StatisticDAO.BackUp(id, payWithCard);
 		this.loggerService.success(`Store was successfully`);
 	}
