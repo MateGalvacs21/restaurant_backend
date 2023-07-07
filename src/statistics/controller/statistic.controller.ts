@@ -14,8 +14,7 @@ export class StatisticController {
 	};
 
 	public backUpStatistics = (req: Request, res: Response) => {
-		const payOption = Boolean(req.params.payWithCard);
-		StatisticService.BackUp(req.params.id, payOption)
+		StatisticService.BackUp(req.params.id, req.params.payWithCard)
 			.then(() => {
 				res.status(StatusCodes.OK).json({ stored: req.params.id });
 			})
